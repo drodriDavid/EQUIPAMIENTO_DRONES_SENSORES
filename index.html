@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Equipamiento de Drones y Sensores · IntellFoo — Universidad de Jaén</title>
+<meta name="description" content="Catálogo interactivo de drones y sensores del grupo de investigación IntellFoo / GGGJ de la Universidad de Jaén: características técnicas, imágenes y documentación." />
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#0f1630; --panel:#141d3a; --panel2:#1b2750;
+    --line:#27345f; --text:#eaf0ff; --muted:#9aa8d4; --muted2:#6f7eb0;
+    --brand:#3b82f6; --brand2:#22d3ee; --accent:#a78bfa;
+    --ok:#34d399; --warn:#fbbf24; --bad:#f87171;
+    --radius:18px; --shadow:0 18px 40px -18px rgba(0,0,0,.65);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(34,211,238,.10), transparent 60%),
+      radial-gradient(1000px 500px at 0% 0%, rgba(167,139,250,.10), transparent 55%),
+      linear-gradient(180deg,var(--bg),var(--bg2));
+    min-height:100vh;
+  }
+  a{color:inherit}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    position:relative; overflow:hidden;
+    padding:34px clamp(16px,4vw,56px) 26px;
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(20,29,58,.85), rgba(11,16,32,.4));
+  }
+  .hero-top{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .logo-badge{
+    width:48px;height:48px;border-radius:13px;flex:none;
+    background:linear-gradient(135deg,var(--brand),var(--accent));
+    display:grid;place-items:center;box-shadow:var(--shadow);
+  }
+  .logo-badge svg{width:28px;height:28px}
+  .hero h1{margin:0;font-size:clamp(1.5rem,3.6vw,2.4rem);letter-spacing:.3px;line-height:1.1}
+  .hero .sub{color:var(--muted);font-size:.95rem;margin-top:2px}
+  .hero .org{
+    margin-left:auto; text-align:right; color:var(--muted); font-size:.82rem; line-height:1.5;
+  }
+  .hero .org b{color:var(--text)}
+  .hero p.intro{
+    color:var(--muted); max-width:760px; margin:18px 0 0; font-size:1rem; line-height:1.6;
+  }
+
+  /* ---------- Stats ---------- */
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
+  .stat{
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line); border-radius:14px; padding:12px 18px; min-width:120px;
+  }
+  .stat .n{font-size:1.7rem;font-weight:800;
+    background:linear-gradient(90deg,var(--brand2),var(--accent));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+
+  /* ---------- Controls ---------- */
+  .controls{
+    position:sticky; top:0; z-index:30;
+    backdrop-filter:blur(10px);
+    background:rgba(11,16,32,.78); border-bottom:1px solid var(--line);
+    padding:14px clamp(16px,4vw,56px); display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+  }
+  .search{flex:1; min-width:220px; position:relative}
+  .search input{
+    width:100%; padding:11px 14px 11px 40px; border-radius:12px;
+    border:1px solid var(--line); background:var(--panel); color:var(--text); font-size:.95rem; outline:none;
+  }
+  .search input:focus{border-color:var(--brand)}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;opacity:.6}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{
+    border:1px solid var(--line); background:var(--panel); color:var(--muted);
+    padding:9px 16px; border-radius:999px; cursor:pointer; font-size:.9rem; font-weight:600;
+    transition:.15s; white-space:nowrap;
+  }
+  .tab:hover{color:var(--text);border-color:var(--brand)}
+  .tab.active{
+    color:#fff; border-color:transparent;
+    background:linear-gradient(135deg,var(--brand),var(--accent));
+  }
+
+  /* ---------- Grid ---------- */
+  main{padding:24px clamp(16px,4vw,56px) 60px}
+  .section-title{display:flex;align-items:center;gap:10px;margin:18px 4px 14px;font-size:1.15rem}
+  .section-title .pill{font-size:.72rem;color:var(--muted);background:var(--panel);border:1px solid var(--line);
+    padding:3px 9px;border-radius:999px}
+  .grid{
+    display:grid; gap:18px;
+    grid-template-columns:repeat(auto-fill,minmax(265px,1fr));
+  }
+  .card{
+    background:linear-gradient(180deg,var(--panel),rgba(20,29,58,.65));
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    cursor:pointer; transition:transform .18s, border-color .18s, box-shadow .18s;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--brand);box-shadow:var(--shadow)}
+  .thumb{position:relative; height:160px; display:grid; place-items:center; overflow:hidden}
+  .thumb svg{width:78%;height:78%}
+  .badge-type{
+    position:absolute; top:10px; left:10px; font-size:.68rem; font-weight:700; letter-spacing:.5px;
+    text-transform:uppercase; padding:4px 9px; border-radius:999px; backdrop-filter:blur(4px);
+    background:rgba(11,16,32,.55); border:1px solid rgba(255,255,255,.12);
+  }
+  .badge-status{
+    position:absolute; top:10px; right:10px; font-size:.68rem; font-weight:700;
+    padding:4px 9px; border-radius:999px; backdrop-filter:blur(4px);
+    background:rgba(11,16,32,.55); border:1px solid rgba(255,255,255,.12); display:flex; align-items:center; gap:5px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%}
+  .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.bad{background:var(--bad)}
+  .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .brand{font-size:.72rem;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
+  .card h3{margin:0;font-size:1.06rem;line-height:1.25}
+  .card .tag{color:var(--muted);font-size:.86rem;line-height:1.4}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+  .chip{font-size:.72rem;color:var(--brand2);background:rgba(34,211,238,.10);
+    border:1px solid rgba(34,211,238,.25);padding:3px 8px;border-radius:999px}
+
+  .empty{color:var(--muted);text-align:center;padding:60px 20px}
+
+  /* ---------- Software section ---------- */
+  .soft-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:6px}
+  .soft{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .soft b{display:block;margin-bottom:3px}
+  .soft span{color:var(--muted);font-size:.85rem;line-height:1.4}
+
+  /* ---------- Modal ---------- */
+  .overlay{
+    position:fixed; inset:0; z-index:100; display:none; align-items:flex-start; justify-content:center;
+    background:rgba(5,8,18,.72); backdrop-filter:blur(6px); padding:4vh 16px; overflow-y:auto;
+  }
+  .overlay.open{display:flex}
+  .modal{
+    width:min(820px,100%); background:linear-gradient(180deg,var(--panel),var(--bg2));
+    border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); overflow:hidden;
+    animation:pop .2s ease;
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+  .modal-hero{position:relative; height:200px; display:grid; place-items:center}
+  .modal-hero svg{width:46%;height:80%}
+  .modal-close{
+    position:absolute; top:12px; right:12px; width:38px;height:38px;border-radius:11px;
+    border:1px solid var(--line); background:rgba(11,16,32,.6); color:#fff; cursor:pointer; font-size:1.2rem;
+    display:grid;place-items:center;
+  }
+  .modal-close:hover{background:var(--bad);border-color:var(--bad)}
+  .modal-body{padding:22px clamp(18px,3vw,30px) 28px}
+  .modal-body .brand{margin-bottom:4px}
+  .modal-body h2{margin:0 0 4px;font-size:1.5rem}
+  .modal-body .tag{color:var(--muted);font-size:1rem;margin-bottom:14px}
+  .status-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .status-tag{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;
+    padding:6px 12px;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}
+  .desc{color:var(--muted);line-height:1.65;margin:0 0 20px}
+  .specs-title{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);
+    font-weight:700;margin:0 0 10px}
+  table.specs{width:100%;border-collapse:collapse;margin-bottom:18px}
+  table.specs td{padding:10px 12px;border-bottom:1px solid var(--line);font-size:.92rem;vertical-align:top}
+  table.specs td:first-child{color:var(--muted);width:46%}
+  table.specs td:last-child{font-weight:600}
+  .meta-line{font-size:.85rem;color:var(--muted);margin:4px 0;line-height:1.5}
+  .meta-line b{color:var(--text)}
+  .doc-btn{
+    display:inline-flex;align-items:center;gap:9px;margin-top:14px;text-decoration:none;
+    padding:12px 20px;border-radius:12px;font-weight:700;
+    background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;
+  }
+  .doc-btn:hover{filter:brightness(1.1)}
+
+  footer{border-top:1px solid var(--line);padding:24px clamp(16px,4vw,56px);color:var(--muted2);font-size:.84rem;line-height:1.6}
+  footer b{color:var(--muted)}
+
+  @media(max-width:560px){
+    .hero .org{display:none}
+    .thumb{height:140px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <div class="logo-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/>
+        <circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="18" r="2.4"/>
+        <rect x="9.2" y="9.2" width="5.6" height="5.6" rx="1.4"/>
+        <path d="M7.6 7.6 9.2 9.2M16.4 7.6 14.8 9.2M7.6 16.4 9.2 14.8M16.4 16.4 14.8 14.8"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Equipamiento de Drones y Sensores</h1>
+      <div class="sub">Catálogo técnico interactivo · Plataformas aéreas y cargas útiles</div>
+    </div>
+    <div class="org">
+      <b>IntellFoo</b> · Inteligencia al servicio del olivar<br>
+      Computer Graphics &amp; Geomatics Group (GGGJ)<br>
+      Universidad de Jaén · Campus Las Lagunillas
+    </div>
+  </div>
+  <p class="intro">
+    Inventario del parque de aeronaves no tripuladas y sensores de teledetección del grupo.
+    Explora cada equipo para consultar sus <b>características técnicas</b>, estado, número de serie
+    y <b>documentación técnica</b> del fabricante. Datos integrados desde el inventario interno,
+    la tabla de pólizas (LivingSoiLL / CEATIC) y la web del grupo.
+  </p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="controls">
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+    </svg>
+    <input id="search" type="text" placeholder="Buscar por nombre, marca, sensor, característica…" />
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-f="all">Todos</button>
+    <button class="tab" data-f="drone">Drones</button>
+    <button class="tab" data-f="sensor">Sensores</button>
+    <button class="tab" data-f="software">Software</button>
+  </div>
+</div>
+
+<main>
+  <div id="catalog"></div>
+
+  <div id="software-section" style="display:none">
+    <div class="section-title">Software de procesado y planificación
+      <span class="pill" id="soft-count"></span></div>
+    <div class="soft-grid" id="soft-grid"></div>
+  </div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer>
+  <b>IntellFoo</b> — Grupo de investigación de la Universidad de Jaén ·
+  Computer Graphics and Geomatics Group (GGGJ) · LivingSoiLL · Soil Data Space.<br>
+  Catálogo interactivo de equipamiento. Fuentes: inventario interno, tabla de pólizas y
+  <a href="https://intellfoo.ujaen.es/?page_id=402" target="_blank" rel="noopener">intellfoo.ujaen.es</a>.
+  Las características técnicas detalladas se enlazan a la documentación oficial de cada fabricante.
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
