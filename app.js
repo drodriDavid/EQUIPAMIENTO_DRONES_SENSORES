@@ -142,6 +142,8 @@ function countUp(el, target){
     el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
     if(p < 1) requestAnimationFrame(step);
   })(t0);
+  /* Failsafe: garantiza el valor final aunque rAF no dispare */
+  setTimeout(()=>{ el.textContent = String(target); }, dur + 300);
 }
 
 /* Inclinación 3D + foco que sigue al cursor (solo ratón, respeta reduced-motion) */
