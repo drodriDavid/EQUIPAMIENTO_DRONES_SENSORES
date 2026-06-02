@@ -19,6 +19,18 @@ const TYPE_META = {
   sensor: { label:"Sensor", color:"#0e8f8f" },
 };
 
+/* Visual de un equipo: foto real (con respaldo a ilustración) o ilustración SVG */
+function visual(e, cls){
+  const c = ART[e.art] || ART.quad;
+  if(e.img){
+    return { bg:"#ffffff", inner:
+      `<img class="art-img ${cls||""}" src="${e.img}" alt="${e.name}" loading="lazy"
+         onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">` +
+      `<span class="svg-fallback hidden">${illustration(e.art)}</span>` };
+  }
+  return { bg:c.bg, inner: illustration(e.art) };
+}
+
 /* ---- Ilustraciones SVG por tipo ---- */
 function illustration(art){
   const c = ART[art] || ART.quad;
@@ -108,14 +120,14 @@ function matches(e,q){
 
 /* ---- Tarjeta ---- */
 function card(e){
-  const c = ART[e.art] || ART.quad;
+  const v = visual(e);
   const chips = (e.features||[]).slice(0,4).map(f=>`<span class="chip">${f}</span>`).join("");
   return `
     <div class="card" data-id="${e.id}">
-      <div class="thumb" style="background:${c.bg}">
+      <div class="thumb ${e.img?"photo":""}" style="background:${v.bg}">
         <span class="badge-type">${TYPE_META[e.type].label}</span>
         <span class="badge-status ${e.status.level}"><span class="dot"></span>${e.status.label}</span>
-        ${illustration(e.art)}
+        ${v.inner}
       </div>
       <div class="card-body">
         <span class="brand">${e.brand}</span>
@@ -129,10 +141,14 @@ function card(e){
 /* ---- Fila de tabla ---- */
 function row(e){
   const tm = TYPE_META[e.type];
+  const v = visual(e);
   const keyFeat = (e.features||[]).slice(0,3).map(f=>`<span class="chip">${f}</span>`).join(" ");
   return `
     <tr data-id="${e.id}">
-      <td><div class="t-name">${e.name}</div><div class="t-brand">${e.brand}</div></td>
+      <td><div class="t-cell">
+        <span class="t-thumb ${e.img?"photo":""}" style="background:${v.bg}">${v.inner}</span>
+        <span><span class="t-name">${e.name}</span><br><span class="t-brand">${e.brand}</span></span>
+      </div></td>
       <td class="hide-sm"><span class="t-type"><span class="sq" style="background:${tm.color}"></span>${tm.label}</span></td>
       <td class="hide-sm"><div class="chips">${keyFeat}</div></td>
       <td class="hide-sm"><span class="t-serial">${e.serial || "—"}</span></td>
@@ -219,13 +235,13 @@ const modal = document.getElementById("modal");
 function openModal(id){
   const e = EQUIPAMIENTO.find(x=>x.id===id);
   if(!e) return;
-  const c = ART[e.art] || ART.quad;
+  const vis = visual(e, "big");
   const rows = e.specs.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join("");
   const chips = (e.features||[]).map(f=>`<span class="chip">${f}</span>`).join("");
   modal.innerHTML = `
-    <div class="modal-hero" style="background:${c.bg}">
+    <div class="modal-hero ${e.img?"photo":""}" style="background:${vis.bg}">
       <button class="modal-close" id="closeBtn" aria-label="Cerrar">×</button>
-      ${illustration(e.art)}
+      ${vis.inner}
     </div>
     <div class="modal-body">
       <span class="brand">${e.brand} · ${TYPE_META[e.type].label}</span>
