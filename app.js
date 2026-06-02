@@ -231,8 +231,9 @@ function heroTitle(){
       <div class="hero-inner">
         <div class="eyebrow">IntellFoo · Universidad de Jaén</div>
         <h1 class="hero-name">Equipamiento de Drones y Sensores</h1>
-        <p class="hero-tag">Inventario técnico del grupo de teledetección: aeronaves no tripuladas
-        y sensores de precisión para cartografía, agricultura de precisión y medio ambiente.</p>
+        <p class="hero-tag">Una flota que abarca desde multirrotores ultraligeros a plataformas
+        industriales de carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR
+        e hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
         <a class="hero-cta" href="#catalogo">Ver el catálogo ${ARROW}</a>
       </div>
     </header>`;
@@ -281,13 +282,6 @@ function band(o){
 function renderGrid(items, isDefault){
   let html = "";
   if(isDefault){
-    html += `<div class="intro reveal">
-      <div class="eyebrow">El parque del grupo</div>
-      <h2 class="grad-text">De la captura aérea al gemelo digital del cultivo</h2>
-      <p>Una flota que abarca desde multirrotores ultraligeros a plataformas industriales de
-      carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR e
-      hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
-    </div>`;
     html += band({
       img:"assets/img/band-forest.jpg",
       eyebrow:"Captura aérea",
