@@ -19,17 +19,36 @@ const TYPE_META = {
   sensor: { label:"Sensor", color:"#0e8f8f" },
 };
 
-/* Visual de un equipo: foto real (con respaldo a ilustración) o ilustración SVG */
+/* Visual de un equipo: foto real (entera, con fondo difuminado) o ilustración SVG */
 function visual(e, cls){
   const c = ART[e.art] || ART.quad;
   if(e.img){
     return { bg:"#ffffff", inner:
+      `<div class="thumb-bg" style="background-image:url('${e.img}')"></div>` +
       `<img class="art-img ${cls||""}" src="${e.img}" alt="${e.name}" loading="lazy"
          onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">` +
       `<span class="svg-fallback hidden">${illustration(e.art)}</span>` };
   }
   return { bg:c.bg, inner: illustration(e.art) };
 }
+
+/* Secciones del catálogo (estilo tienda) */
+const CAT_META = {
+  drone:  { title:"Drones", sub:"Aeronaves no tripuladas para captura aérea, cartografía y teledetección" },
+  sensor: { title:"Sensores", sub:"Cargas útiles y sensores de teledetección de alta precisión" },
+};
+const SUBGROUPS = {
+  drone: [
+    { key:"Plataformas industriales", ids:["m300","matrice400","m210","lidardrone"] },
+    { key:"Drones compactos / multirrotor", ids:["phantom4rtk","mavic3m","mavic3t","mavicpro","mini4pro"] },
+  ],
+  sensor: [
+    { key:"Cámaras y gimbales", ids:["p1","xt2"] },
+    { key:"Sensores multiespectrales", ids:["rededgemx","rededgemxblue"] },
+    { key:"LiDAR", ids:["scoutultra"] },
+    { key:"Sensores hiperespectrales", ids:["nanohyperspec","afx17"] },
+  ],
+};
 
 /* ---- Ilustraciones SVG por tipo ---- */
 function illustration(art){
@@ -121,7 +140,6 @@ function matches(e,q){
 /* ---- Tarjeta ---- */
 function card(e){
   const v = visual(e);
-  const chips = (e.features||[]).slice(0,4).map(f=>`<span class="chip">${f}</span>`).join("");
   return `
     <div class="card" data-id="${e.id}">
       <div class="thumb ${e.img?"photo":""}" style="background:${v.bg}">
@@ -133,9 +151,39 @@ function card(e){
         <span class="brand">${e.brand}</span>
         <h3>${e.name}</h3>
         <div class="tag">${e.tagline}</div>
-        <div class="chips">${chips}</div>
+        <div class="card-cta">Ver ficha técnica
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
       </div>
     </div>`;
+}
+
+/* Vista en rejilla con secciones y subcategorías */
+function renderGrid(items){
+  let html = "";
+  let firstCat = true;
+  for(const type of ["drone","sensor"]){
+    const ofType = items.filter(e=>e.type===type);
+    if(!ofType.length) continue;
+    html += `<h2 class="cat-head ${firstCat?"first":""}">${CAT_META[type].title}</h2>`;
+    html += `<p class="cat-sub">${CAT_META[type].sub}</p>`;
+    firstCat = false;
+    const grouped = new Set();
+    for(const sg of SUBGROUPS[type]){
+      const group = sg.ids.map(id=>ofType.find(e=>e.id===id)).filter(Boolean);
+      group.forEach(e=>grouped.add(e.id));
+      if(!group.length) continue;
+      html += `<div class="sub-head">${sg.key} <span class="pill">${group.length}</span></div>`;
+      html += `<div class="grid">${group.map(card).join("")}</div>`;
+    }
+    const rest = ofType.filter(e=>!grouped.has(e.id));
+    if(rest.length){
+      html += `<div class="sub-head">Otros <span class="pill">${rest.length}</span></div>`;
+      html += `<div class="grid">${rest.map(card).join("")}</div>`;
+    }
+  }
+  return html;
 }
 
 /* ---- Fila de tabla ---- */
@@ -171,27 +219,12 @@ function render(){
 
   let html = "";
   if(activeFilter!=="software"){
-    const drones = items.filter(e=>e.type==="drone");
-    const sensores = items.filter(e=>e.type==="sensor");
-
-    if(view==="table"){
-      if(items.length){
-        html += renderTable(items);
-      } else {
-        html += `<div class="empty">Sin resultados para “${query}”.</div>`;
-      }
+    if(!items.length){
+      html += `<div class="empty">Sin resultados para “${query}”.</div>`;
+    } else if(view==="table"){
+      html += renderTable(items);
     } else {
-      if(drones.length){
-        html += `<div class="section-title">Drones / Aeronaves <span class="pill">${drones.length}</span></div>`;
-        html += `<div class="grid">${drones.map(card).join("")}</div>`;
-      }
-      if(sensores.length){
-        html += `<div class="section-title">Sensores / Cargas útiles <span class="pill">${sensores.length}</span></div>`;
-        html += `<div class="grid">${sensores.map(card).join("")}</div>`;
-      }
-      if(!items.length){
-        html += `<div class="empty">Sin resultados para “${query}”.</div>`;
-      }
+      html += renderGrid(items);
     }
   }
   catalogEl.innerHTML = html;
