@@ -32,6 +32,29 @@ function visual(e, cls){
   return { bg:c.bg, inner: illustration(e.art) };
 }
 
+/* ---- Estados editables (se guardan en el navegador) ---- */
+const STATUS_OPTS = [
+  { label:"Operativo",    level:"ok"   },
+  { label:"En reserva",   level:"warn" },
+  { label:"En revisión",  level:"warn" },
+  { label:"No operativo", level:"bad"  },
+];
+const STATUS_KEY = "intellfoo-status";
+function loadStatusOverrides(){ try{ return JSON.parse(localStorage.getItem(STATUS_KEY)) || {}; }catch(_){ return {}; } }
+function applyStatusOverrides(){
+  const ov = loadStatusOverrides();
+  EQUIPAMIENTO.forEach(e=>{ if(ov[e.id]) e.status = ov[e.id]; });
+}
+function setStatus(id, idx){
+  const opt = STATUS_OPTS[idx]; if(!opt) return;
+  const e = EQUIPAMIENTO.find(x=>x.id===id); if(!e) return;
+  e.status = { label:opt.label, level:opt.level };
+  const ov = loadStatusOverrides(); ov[id] = e.status;
+  try{ localStorage.setItem(STATUS_KEY, JSON.stringify(ov)); }catch(_){}
+  render();        // actualiza insignias del catálogo
+  openModal(id);   // refresca la ficha (botón activo + insignia)
+}
+
 /* Secciones del catálogo (estilo tienda) */
 const CAT_META = {
   drone:  { eyebrow:"Plataformas aéreas", title:"Drones", sub:"Aeronaves no tripuladas para captura aérea, cartografía y teledetección." },
@@ -115,6 +138,9 @@ let query = "";
 
 const catalogEl = document.getElementById("catalog");
 const softSection = document.getElementById("software-section");
+
+/* Aplica los estados guardados antes de calcular nada */
+applyStatusOverrides();
 
 /* ---- Stats ---- */
 (function renderStats(){
@@ -424,6 +450,12 @@ function openModal(id){
         <span class="status-tag ${e.status.level}"><span class="dot"></span>${e.status.label}</span>
         ${e.serial?`<span class="status-tag">N.º serie: ${e.serial}</span>`:""}
       </div>
+      <div class="status-edit">
+        <span class="status-edit-label">Cambiar estado del equipo</span>
+        <div class="status-edit-opts">
+          ${STATUS_OPTS.map((o,i)=>`<button class="se-btn ${o.level} ${o.label===e.status.label?"active":""}" data-st="${i}">${o.label}</button>`).join("")}
+        </div>
+      </div>
       <p class="desc">${e.description}</p>
       <div class="chips" style="margin-bottom:18px">${chips}</div>
       <p class="specs-title">Características técnicas</p>
@@ -438,6 +470,8 @@ function openModal(id){
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
   document.getElementById("closeBtn").addEventListener("click", closeModal);
+  modal.querySelectorAll(".se-btn").forEach(b=>
+    b.addEventListener("click", ()=>setStatus(id, +b.dataset.st)));
 }
 function closeModal(){
   overlay.classList.remove("open");
