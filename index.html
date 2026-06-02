@@ -311,6 +311,48 @@
   /* ============ A11Y FOCUS ============ */
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
   .tile:focus-visible,.hero-feature:focus-visible,table.inv tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  /* ============ DETALLES PREMIUM / ACTUALES ============ */
+  .grad-text{background:linear-gradient(118deg,var(--accent) 0%,#21b3cf 96%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* Hero: aurora animada + grano sutil */
+  .hero-feature::before{content:"";position:absolute;inset:-25%;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(38% 46% at 28% 36%, rgba(60,122,236,.55), transparent 62%),
+      radial-gradient(34% 42% at 74% 64%, rgba(26,196,210,.42), transparent 62%),
+      radial-gradient(30% 36% at 60% 18%, rgba(150,110,255,.30), transparent 60%);
+    filter:blur(46px);animation:aurora 20s ease-in-out infinite alternate}
+  @keyframes aurora{
+    0%{transform:translate3d(-3%,-2%,0) scale(1) rotate(0deg)}
+    100%{transform:translate3d(5%,3%,0) scale(1.18) rotate(8deg)}}
+  .hero-feature .eyebrow,.hero-name,.hero-tag,.hero-cta,.hero-img-wrap{position:relative;z-index:2}
+
+  /* Tarjetas: inclinación 3D + foco que sigue al cursor */
+  .tile{transform-style:preserve-3d;transition:transform .25s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+  .tile.tilting{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-5px);
+    transition:transform .08s linear,box-shadow .3s var(--ease),border-color .3s}
+  .tile::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;
+    background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(31,95,214,.10), transparent 64%);
+    opacity:0;transition:opacity .3s}
+  .tile:hover::after{opacity:1}
+
+  /* Marquesina de fabricantes */
+  .marquee{overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg);
+    -webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .marquee-track{display:flex;align-items:center;gap:40px;width:max-content;padding:13px 20px;
+    animation:marquee 28s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .marquee-track span{color:var(--muted-2);font-weight:700;font-size:.92rem;letter-spacing:.02em;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:40px}
+  .marquee-track span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.5}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-feature::before{animation:none}
+    .marquee-track{animation:none}
+  }
 </style>
 </head>
 <body>
@@ -344,6 +386,13 @@
 <div id="hero-mount"></div>
 
 <div class="stats-wrap"><div class="container"><div class="stats" id="stats"></div></div></div>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>DJI</span><span>MicaSense</span><span>Headwall Photonics</span><span>Phoenix LiDAR</span><span>Specim</span><span>Aeromedia</span><span>FLIR</span><span>Pix4D</span><span>Agisoft Metashape</span>
+    <span>DJI</span><span>MicaSense</span><span>Headwall Photonics</span><span>Phoenix LiDAR</span><span>Specim</span><span>Aeromedia</span><span>FLIR</span><span>Pix4D</span><span>Agisoft Metashape</span>
+  </div>
+</div>
 
 <div class="controls">
   <div class="container controls-inner">
@@ -401,7 +450,7 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
 
-<script src="data.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<script src="data.js?v=8"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

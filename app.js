@@ -126,8 +126,44 @@ const softSection = document.getElementById("software-section");
     [SOFTWARE.length,"Software"], [ops,"Operativos"],
   ];
   document.getElementById("stats").innerHTML = data.map(([n,l])=>
-    `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+    `<div class="stat"><div class="n grad-text" data-target="${n}">0</div><div class="l">${l}</div></div>`).join("");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll(".stat .n").forEach(el=>{
+    if(reduce) el.textContent = el.dataset.target;
+    else countUp(el, +el.dataset.target);
+  });
 })();
+
+/* Contador animado */
+function countUp(el, target){
+  const dur = 1100, t0 = performance.now();
+  (function step(now){
+    const p = Math.min(1, (now - t0) / dur);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    if(p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+/* Inclinación 3D + foco que sigue al cursor (solo ratón, respeta reduced-motion) */
+function tileTilt(el){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if(window.matchMedia("(hover: none)").matches) return;
+  el.addEventListener("pointermove", ev=>{
+    const r = el.getBoundingClientRect();
+    const px = (ev.clientX - r.left) / r.width;
+    const py = (ev.clientY - r.top) / r.height;
+    el.style.setProperty("--ry", ((px - 0.5) * 7).toFixed(2) + "deg");
+    el.style.setProperty("--rx", ((0.5 - py) * 7).toFixed(2) + "deg");
+    el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+    el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+    el.classList.add("tilting");
+  });
+  el.addEventListener("pointerleave", ()=>{
+    el.classList.remove("tilting");
+    el.style.removeProperty("--rx");
+    el.style.removeProperty("--ry");
+  });
+}
 
 /* ---- Búsqueda ---- */
 function matches(e,q){
@@ -253,7 +289,7 @@ function renderGrid(items, featured){
   if(isDefault){
     html += `<div class="intro reveal">
       <div class="eyebrow">El parque del grupo</div>
-      <h2>De la captura aérea al gemelo digital del cultivo</h2>
+      <h2 class="grad-text">De la captura aérea al gemelo digital del cultivo</h2>
       <p>Una flota que abarca desde multirrotores ultraligeros a plataformas industriales de
       carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR e
       hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
@@ -348,6 +384,7 @@ function render(){
         if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); openModal(el.dataset.id); }
       });
     }));
+  catalogEl.querySelectorAll(".tile").forEach(tileTilt);
   setupReveal();
 }
 
