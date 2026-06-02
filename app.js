@@ -34,8 +34,8 @@ function visual(e, cls){
 
 /* Secciones del catálogo (estilo tienda) */
 const CAT_META = {
-  drone:  { title:"Drones", sub:"Aeronaves no tripuladas para captura aérea, cartografía y teledetección" },
-  sensor: { title:"Sensores", sub:"Cargas útiles y sensores de teledetección de alta precisión" },
+  drone:  { eyebrow:"Plataformas aéreas", title:"Drones", sub:"Aeronaves no tripuladas para captura aérea, cartografía y teledetección." },
+  sensor: { eyebrow:"Cargas útiles & teledetección", title:"Sensores", sub:"Cámaras y sensores de teledetección de alta precisión." },
 };
 const SUBGROUPS = {
   drone: [
@@ -185,33 +185,38 @@ function tile(e){
     </div>`;
 }
 
+/* Imagen del hero (foto grande o ilustración) */
+function heroImage(e){
+  if(e.img){
+    return `<img class="hero-img" src="${e.img}" alt="${e.name}"
+        onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">` +
+      `<span class="hero-svg hidden">${illustration(e.art)}</span>`;
+  }
+  return `<span class="hero-svg">${illustration(e.art)}</span>`;
+}
+
 /* Hero destacado a pantalla completa */
 function heroFeature(e){
   return `
     <div class="hero-feature" data-id="${e.id}">
-      <span class="tile-label">Equipo destacado · ${e.brand}</span>
-      <h2 class="tile-name">${e.name}</h2>
-      <p class="tile-tag">${e.tagline}</p>
-      <span class="tile-cta">Ver ficha técnica ${ARROW}</span>
-      <div class="tile-img-wrap">${tileImage(e)}</div>
+      <div class="eyebrow">Equipo destacado · ${e.brand}</div>
+      <h1 class="hero-name">${e.name}</h1>
+      <p class="hero-tag">${e.tagline}</p>
+      <span class="hero-cta">Ver ficha técnica ${ARROW}</span>
+      <div class="hero-img-wrap">${heroImage(e)}</div>
     </div>`;
 }
 
-/* Vista showcase con hero, secciones y subcategorías */
-function renderGrid(items){
+/* Vista showcase con secciones y subcategorías (el hero va aparte) */
+function renderGrid(items, featured){
   let html = "";
-  const featuredId = "matrice400";
-  const showHero = (activeFilter==="all" && !query.trim());
-  const featured = showHero ? items.find(e=>e.id===featuredId) : null;
-  if(featured) html += heroFeature(featured);
-
-  let firstCat = true;
   for(const type of ["drone","sensor"]){
-    let ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
+    const ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
     if(!ofType.length) continue;
-    html += `<h2 class="cat-head ${firstCat?"first":""}">${CAT_META[type].title}</h2>`;
-    html += `<p class="cat-sub">${CAT_META[type].sub}</p>`;
-    firstCat = false;
+    html += `<section class="cat">
+      <div class="eyebrow">${CAT_META[type].eyebrow}</div>
+      <h2 class="cat-head">${CAT_META[type].title}</h2>
+      <p class="cat-sub">${CAT_META[type].sub}</p>`;
     const grouped = new Set();
     for(const sg of SUBGROUPS[type]){
       const group = sg.ids.map(id=>ofType.find(e=>e.id===id)).filter(Boolean);
@@ -225,6 +230,7 @@ function renderGrid(items){
       html += `<div class="sub-head">Otros <span class="pill">${rest.length}</span></div>`;
       html += `<div class="showcase">${rest.map(tile).join("")}</div>`;
     }
+    html += `</section>`;
   }
   return html;
 }
@@ -260,6 +266,12 @@ function render(){
     return matches(e,q);
   });
 
+  /* Hero destacado (solo en vista catálogo, sin filtro ni búsqueda) */
+  const heroMount = document.getElementById("hero-mount");
+  const showHero = (activeFilter==="all" && !query.trim() && view==="grid");
+  const featured = showHero ? EQUIPAMIENTO.find(e=>e.id==="matrice400") : null;
+  heroMount.innerHTML = featured ? heroFeature(featured) : "";
+
   let html = "";
   if(activeFilter!=="software"){
     if(!items.length){
@@ -267,7 +279,7 @@ function render(){
     } else if(view==="table"){
       html += renderTable(items);
     } else {
-      html += renderGrid(items);
+      html += renderGrid(items, featured);
     }
   }
   catalogEl.innerHTML = html;
@@ -283,8 +295,9 @@ function render(){
     softSection.style.display = "none";
   }
 
-  catalogEl.querySelectorAll("[data-id]").forEach(el=>
-    el.addEventListener("click",()=>openModal(el.dataset.id)));
+  [document.getElementById("hero-mount"), catalogEl].forEach(root=>
+    root.querySelectorAll("[data-id]").forEach(el=>
+      el.addEventListener("click",()=>openModal(el.dataset.id))));
 }
 
 function renderTable(items){
@@ -320,9 +333,9 @@ function openModal(id){
       ${vis.inner}
     </div>
     <div class="modal-body">
-      <span class="brand">${e.brand} · ${TYPE_META[e.type].label}</span>
+      <span class="tile-label">${e.brand} · ${TYPE_META[e.type].label}</span>
       <h2>${e.name}</h2>
-      <div class="tag">${e.tagline}</div>
+      <div class="lead">${e.tagline}</div>
       <div class="status-row">
         <span class="status-tag ${e.status.level}"><span class="dot"></span>${e.status.label}</span>
         ${e.serial?`<span class="status-tag">N.º serie: ${e.serial}</span>`:""}
