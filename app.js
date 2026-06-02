@@ -207,31 +207,50 @@ function heroFeature(e){
     </div>`;
 }
 
-/* Vista showcase con secciones y subcategorías (el hero va aparte) */
-function renderGrid(items, featured){
-  let html = "";
-  for(const type of ["drone","sensor"]){
-    const ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
-    if(!ofType.length) continue;
-    html += `<section class="cat">
-      <div class="eyebrow">${CAT_META[type].eyebrow}</div>
-      <h2 class="cat-head">${CAT_META[type].title}</h2>
-      <p class="cat-sub">${CAT_META[type].sub}</p>`;
-    const grouped = new Set();
-    for(const sg of SUBGROUPS[type]){
-      const group = sg.ids.map(id=>ofType.find(e=>e.id===id)).filter(Boolean);
-      group.forEach(e=>grouped.add(e.id));
-      if(!group.length) continue;
-      html += `<div class="sub-head">${sg.key} <span class="pill">${group.length}</span></div>`;
-      html += `<div class="showcase">${group.map(tile).join("")}</div>`;
-    }
-    const rest = ofType.filter(e=>!grouped.has(e.id));
-    if(rest.length){
-      html += `<div class="sub-head">Otros <span class="pill">${rest.length}</span></div>`;
-      html += `<div class="showcase">${rest.map(tile).join("")}</div>`;
-    }
-    html += `</section>`;
+/* Sección de una categoría con sus subgrupos */
+function catSection(type, items, featured){
+  const ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
+  if(!ofType.length) return "";
+  let html = `<section class="cat">
+    <div class="eyebrow">${CAT_META[type].eyebrow}</div>
+    <h2 class="cat-head">${CAT_META[type].title}</h2>
+    <p class="cat-sub">${CAT_META[type].sub}</p>`;
+  const grouped = new Set();
+  for(const sg of SUBGROUPS[type]){
+    const group = sg.ids.map(id=>ofType.find(e=>e.id===id)).filter(Boolean);
+    group.forEach(e=>grouped.add(e.id));
+    if(!group.length) continue;
+    html += `<div class="sub-head">${sg.key} <span class="pill">${group.length}</span></div>`;
+    html += `<div class="showcase">${group.map(tile).join("")}</div>`;
   }
+  const rest = ofType.filter(e=>!grouped.has(e.id));
+  if(rest.length){
+    html += `<div class="sub-head">Otros <span class="pill">${rest.length}</span></div>`;
+    html += `<div class="showcase">${rest.map(tile).join("")}</div>`;
+  }
+  return html + `</section>`;
+}
+
+/* Vista showcase con texto editorial intercalado (el hero va aparte) */
+function renderGrid(items, featured){
+  const isDefault = !!featured;   // vista catálogo, sin filtro ni búsqueda
+  let html = "";
+  if(isDefault){
+    html += `<div class="intro">
+      <div class="eyebrow">El parque del grupo</div>
+      <h2>De la captura aérea al gemelo digital del cultivo</h2>
+      <p>Una flota que abarca desde multirrotores ultraligeros a plataformas industriales de
+      carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR e
+      hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
+    </div>`;
+  }
+  html += catSection("drone", items, featured);
+  if(isDefault){
+    html += `<p class="statement">Cada sensor añade una capa de información:
+      <span>RGB</span>, <span>multiespectral</span>, <span>térmico</span>,
+      <span>LiDAR</span> e <span>hiperespectral</span>.</p>`;
+  }
+  html += catSection("sensor", items, featured);
   return html;
 }
 
@@ -288,7 +307,6 @@ function render(){
   const softMatch = SOFTWARE.filter(([n,d])=> !q || (n+" "+d).toLowerCase().includes(q));
   if(showSoftware && softMatch.length){
     softSection.style.display = "block";
-    document.getElementById("soft-count").textContent = softMatch.length;
     document.getElementById("soft-grid").innerHTML = softMatch.map(([n,d])=>
       `<div class="soft"><b>${n}</b><span>${d}</span></div>`).join("");
   } else {
