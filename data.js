@@ -202,6 +202,7 @@ const EQUIPAMIENTO = [
     id: "lidardrone",
     type: "drone",
     art: "industrial",
+    img: "assets/img/lidardrone.jpg",
     name: "Dron LiDAR FX II (Aeromedia)",
     brand: "Aeromedia / Phoenix",
     tagline: "Plataforma aerotransportada para LiDAR Phoenix",
