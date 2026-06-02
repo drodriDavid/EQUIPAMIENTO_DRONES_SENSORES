@@ -237,6 +237,7 @@ function heroImage(e){
 function heroFeature(e){
   return `
     <div class="hero-feature" data-id="${e.id}">
+      <div class="hero-photo" style="background-image:url('assets/img/band-campus.jpg')"></div>
       <div class="eyebrow">Equipo destacado · ${e.brand}</div>
       <h1 class="hero-name">${e.name}</h1>
       <p class="hero-tag">${e.tagline}</p>
@@ -297,11 +298,11 @@ function renderGrid(items, featured){
       hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
     </div>`;
     html += band({
-      img:"assets/img/band-campus.jpg",
+      img:"assets/img/band-forest.jpg",
       eyebrow:"Captura aérea",
       title:"Cartografiamos el territorio desde el aire",
       text:"Vuelos propios de fotogrametría, térmica y LiDAR sobre cultivos, masas forestales e infraestructuras.",
-      src:"Campus Las Lagunillas, Universidad de Jaén · vuelo propio"
+      src:"Masa forestal · vuelo propio"
     });
   }
   html += catSection("drone", items, featured);
@@ -462,13 +463,6 @@ overlay.addEventListener("click", e=>{ if(e.target===overlay) closeModal(); });
 document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
 
 /* ---- Eventos ---- */
-document.getElementById("tabs").addEventListener("click", e=>{
-  const btn = e.target.closest(".tab"); if(!btn) return;
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  btn.classList.add("active");
-  activeFilter = btn.dataset.f;
-  render();
-});
 document.getElementById("viewToggle").addEventListener("click", e=>{
   const btn = e.target.closest("button"); if(!btn) return;
   document.querySelectorAll("#viewToggle button").forEach(b=>b.classList.remove("active"));

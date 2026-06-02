@@ -62,9 +62,13 @@
       radial-gradient(72% 90% at 74% -6%, rgba(58,120,236,.55), transparent 60%),
       radial-gradient(60% 70% at 16% 104%, rgba(28,190,205,.30), transparent 60%),
       linear-gradient(180deg,#070c18 0%,#0a1426 55%,#080f1e 100%);}
-  .hero-feature::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(120% 80% at 50% 120%, rgba(255,255,255,.06), transparent 60%)}
-  .hero-feature .eyebrow{color:#82b1ff;position:relative;z-index:2}
+  .hero-feature::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+    background:radial-gradient(120% 80% at 50% 120%, rgba(255,255,255,.05), transparent 60%)}
+  /* Fondo fotográfico del header (campus UJA) */
+  .hero-photo{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center 36%}
+  .hero-photo::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(6,10,18,.52) 0%, rgba(6,10,18,.6) 48%, rgba(6,10,18,.86) 100%)}
+  .hero-feature .eyebrow{color:#9fc0ff;position:relative;z-index:2}
   .hero-name{position:relative;z-index:2;font-size:clamp(2.2rem,5.2vw,3.6rem);font-weight:900;
     line-height:1.02;margin:14px 0 0;max-width:16ch}
   .hero-tag{position:relative;z-index:2;color:#bcc8e0;font-size:clamp(1rem,1.6vw,1.22rem);
@@ -306,8 +310,8 @@
   .grad-text{background:linear-gradient(118deg,var(--accent) 0%,#21b3cf 96%);
     -webkit-background-clip:text;background-clip:text;color:transparent}
 
-  /* Hero: aurora animada + grano sutil */
-  .hero-feature::before{content:"";position:absolute;inset:-25%;z-index:0;pointer-events:none;
+  /* Hero: aurora animada (sobre la foto, color sutil) */
+  .hero-feature::before{content:"";position:absolute;inset:-25%;z-index:1;pointer-events:none;opacity:.65;
     background:
       radial-gradient(38% 46% at 28% 36%, rgba(60,122,236,.55), transparent 62%),
       radial-gradient(34% 42% at 74% 64%, rgba(26,196,210,.42), transparent 62%),
