@@ -22,6 +22,18 @@
     --container:1200px;
     --ease:cubic-bezier(.22,.61,.36,1);
   }
+  [data-theme="dark"]{
+    --bg:#0b0f17; --bg-soft:#121826; --bg-soft-2:#1b2334;
+    --ink:#eef1f6; --ink-2:#c4cbd8; --muted:#8b94a7; --muted-2:#646d80;
+    --line:#222b3c; --line-2:#19202e;
+    --accent:#5e9bff; --accent-press:#83b2ff; --accent-soft:rgba(94,155,255,.16);
+    --ok:#34d39a; --ok-soft:rgba(52,211,154,.14); --warn:#e3b04b; --warn-soft:rgba(227,176,75,.14);
+    --sh-1:0 1px 2px rgba(0,0,0,.35); --sh-2:0 12px 32px -14px rgba(0,0,0,.6); --sh-3:0 34px 64px -26px rgba(0,0,0,.72);
+  }
+  html{color-scheme:light}
+  html[data-theme="dark"]{color-scheme:dark}
+  body, .nav, .controls, .stats-wrap, .tile, .soft, .modal, .table-wrap, footer, .search input{
+    transition:background-color .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease)}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
@@ -98,16 +110,16 @@
   .search input{width:100%;padding:11px 16px 11px 42px;border-radius:12px;border:1px solid var(--line);
     background:var(--bg-soft);color:var(--ink);font-size:.94rem;font-family:inherit;outline:none;transition:.18s}
   .search input::placeholder{color:var(--muted-2)}
-  .search input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px var(--accent-soft)}
+  .search input:focus{border-color:var(--accent);background:var(--bg);box-shadow:0 0 0 4px var(--accent-soft)}
   .search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted-2)}
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
   .tab{border:1px solid var(--line);background:var(--bg);color:var(--ink-2);padding:9px 16px;border-radius:10px;
     cursor:pointer;font-size:.88rem;font-weight:600;font-family:inherit;transition:.16s}
   .tab:hover{border-color:#cfd6e2;background:var(--bg-soft)}
-  .tab.active{color:#fff;background:var(--ink);border-color:var(--ink)}
+  .tab.active{color:#fff;background:var(--accent);border-color:var(--accent)}
   .view-toggle{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
   .view-toggle button{border:0;background:transparent;color:var(--muted);padding:9px 12px;cursor:pointer;display:grid;place-items:center;transition:.15s}
-  .view-toggle button.active{background:var(--ink);color:#fff}
+  .view-toggle button.active{background:var(--accent);color:#fff}
   .view-toggle button svg{width:17px;height:17px}
   .view-toggle button+button{border-left:1px solid var(--line)}
 
@@ -134,14 +146,15 @@
   .showcase{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
   @media(max-width:1080px){.showcase{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.showcase{grid-template-columns:1fr}}
-  .tile{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  .tile{position:relative;border:1px solid #e7eaf0;border-radius:var(--r-lg);overflow:hidden;
     min-height:406px;display:flex;flex-direction:column;align-items:center;text-align:center;
-    padding:26px 22px 0;cursor:pointer;background:linear-gradient(180deg,#fafbfd 0%,var(--bg-soft) 100%);
+    padding:26px 22px 0;cursor:pointer;background:linear-gradient(180deg,#fafbfd 0%,#eef1f6 100%);
     transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s}
+  [data-theme="dark"] .tile{box-shadow:var(--sh-1)}
   .tile:hover{transform:translateY(-5px);box-shadow:var(--sh-3);border-color:#dbe1ea}
-  .tile-label{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700}
-  .tile-name{font-size:clamp(1.12rem,1.5vw,1.34rem);font-weight:800;letter-spacing:-.025em;margin:6px 0 4px;line-height:1.12}
-  .tile-tag{color:var(--ink-2);font-size:.88rem;line-height:1.45;max-width:34ch;margin:0}
+  .tile-label{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:#6a7385;font-weight:700}
+  .tile-name{font-size:clamp(1.12rem,1.5vw,1.34rem);font-weight:800;letter-spacing:-.025em;margin:6px 0 4px;line-height:1.12;color:#0a0f1c}
+  .tile-tag{color:#39414f;font-size:.88rem;line-height:1.45;max-width:34ch;margin:0}
   .tile-cta{margin-top:11px;display:inline-flex;gap:6px;align-items:center;font-size:.83rem;font-weight:700;color:var(--accent)}
   .tile-cta svg{transition:transform .25s var(--ease)}
   .tile:hover .tile-cta svg{transform:translateX(5px)}
@@ -241,14 +254,46 @@
   .meta-line{font-size:.85rem;color:var(--muted);margin:4px 0;line-height:1.5}
   .meta-line b{color:var(--ink-2);font-weight:600}
   .doc-btn{display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:13px 22px;border-radius:12px;
-    font-weight:700;font-size:.92rem;background:var(--ink);color:#fff;transition:.18s}
-  .doc-btn:hover{background:#000;transform:translateY(-1px)}
+    font-weight:700;font-size:.92rem;background:var(--accent);color:#fff;transition:.18s}
+  .doc-btn:hover{background:var(--accent-press);transform:translateY(-1px)}
 
   /* ============ FOOTER ============ */
   footer{border-top:1px solid var(--line);background:var(--bg-soft);margin-top:30px}
   .foot{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;padding:34px 0;color:var(--muted);font-size:.84rem;line-height:1.65}
   .foot b{color:var(--ink-2)}
   .foot a{color:var(--accent);font-weight:600}
+
+  /* ============ ICON BUTTONS / THEME ============ */
+  .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--bg);
+    color:var(--ink-2);display:grid;place-items:center;cursor:pointer;transition:.16s var(--ease);flex:none}
+  .icon-btn:hover{background:var(--bg-soft);color:var(--ink);border-color:#cfd6e2}
+  .icon-btn svg{width:18px;height:18px}
+  .icon-btn .moon{display:none}
+  [data-theme="dark"] .icon-btn .sun{display:none}
+  [data-theme="dark"] .icon-btn .moon{display:block}
+
+  /* ============ NAV ON SCROLL ============ */
+  .nav.scrolled{box-shadow:0 6px 24px -12px rgba(10,15,28,.22);background:rgba(255,255,255,.9)}
+  [data-theme="dark"] .nav.scrolled{background:rgba(11,15,23,.92);box-shadow:0 6px 24px -10px rgba(0,0,0,.5)}
+
+  /* ============ SCROLL REVEAL ============ */
+  @media (prefers-reduced-motion: no-preference){
+    html.has-reveal .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease), transform .6s var(--ease)}
+    html.has-reveal .reveal.in{opacity:1;transform:none}
+  }
+
+  /* ============ BACK TO TOP ============ */
+  .totop{position:fixed;right:clamp(16px,3vw,28px);bottom:clamp(16px,3vw,28px);z-index:70;
+    width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    box-shadow:var(--sh-2);display:grid;place-items:center;cursor:pointer;
+    opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:.28s var(--ease)}
+  .totop.show{opacity:1;transform:none;pointer-events:auto}
+  .totop:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .totop svg{width:20px;height:20px}
+
+  /* ============ A11Y FOCUS ============ */
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+  .tile:focus-visible,.hero-feature:focus-visible,table.inv tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 </style>
 </head>
 <body>
@@ -267,6 +312,10 @@
       <span><b>IntellFoo</b><small>Inventario de equipamiento</small></span>
     </a>
     <div class="nav-spacer"></div>
+    <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema claro u oscuro" title="Cambiar tema">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg>
+    </button>
     <div class="nav-meta">
       <b>Computer Graphics &amp; Geomatics Group</b><br>
       Universidad de Jaén · <a href="https://intellfoo.ujaen.es/?page_id=402" target="_blank" rel="noopener" style="color:var(--accent)">intellfoo.ujaen.es</a>
@@ -331,7 +380,11 @@
   </div>
 </footer>
 
-<script src="data.js?v=3"></script>
-<script src="app.js?v=3"></script>
+<button class="totop" id="totop" aria-label="Volver arriba" title="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script src="data.js?v=6"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

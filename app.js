@@ -175,7 +175,7 @@ const ARROW = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" strok
 /* Tile grande estilo tienda */
 function tile(e){
   return `
-    <div class="tile" data-id="${e.id}">
+    <div class="tile reveal" data-id="${e.id}">
       <span class="tile-status ${e.status.level}"><span class="dot"></span>${e.status.label}</span>
       <span class="tile-label">${e.brand} · ${TYPE_META[e.type].label}</span>
       <h3 class="tile-name">${e.name}</h3>
@@ -212,9 +212,11 @@ function catSection(type, items, featured){
   const ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
   if(!ofType.length) return "";
   let html = `<section class="cat">
-    <div class="eyebrow">${CAT_META[type].eyebrow}</div>
-    <h2 class="cat-head">${CAT_META[type].title}</h2>
-    <p class="cat-sub">${CAT_META[type].sub}</p>`;
+    <div class="reveal">
+      <div class="eyebrow">${CAT_META[type].eyebrow}</div>
+      <h2 class="cat-head">${CAT_META[type].title}</h2>
+      <p class="cat-sub">${CAT_META[type].sub}</p>
+    </div>`;
   const grouped = new Set();
   for(const sg of SUBGROUPS[type]){
     const group = sg.ids.map(id=>ofType.find(e=>e.id===id)).filter(Boolean);
@@ -236,7 +238,7 @@ function renderGrid(items, featured){
   const isDefault = !!featured;   // vista catálogo, sin filtro ni búsqueda
   let html = "";
   if(isDefault){
-    html += `<div class="intro">
+    html += `<div class="intro reveal">
       <div class="eyebrow">El parque del grupo</div>
       <h2>De la captura aérea al gemelo digital del cultivo</h2>
       <p>Una flota que abarca desde multirrotores ultraligeros a plataformas industriales de
@@ -246,7 +248,7 @@ function renderGrid(items, featured){
   }
   html += catSection("drone", items, featured);
   if(isDefault){
-    html += `<p class="statement">Cada sensor añade una capa de información:
+    html += `<p class="statement reveal">Cada sensor añade una capa de información:
       <span>RGB</span>, <span>multiespectral</span>, <span>térmico</span>,
       <span>LiDAR</span> e <span>hiperespectral</span>.</p>`;
   }
@@ -308,15 +310,31 @@ function render(){
   if(showSoftware && softMatch.length){
     softSection.style.display = "block";
     document.getElementById("soft-grid").innerHTML = softMatch.map(([n,d])=>
-      `<div class="soft"><b>${n}</b><span>${d}</span></div>`).join("");
+      `<div class="soft reveal"><b>${n}</b><span>${d}</span></div>`).join("");
   } else {
     softSection.style.display = "none";
   }
 
   [document.getElementById("hero-mount"), catalogEl].forEach(root=>
-    root.querySelectorAll("[data-id]").forEach(el=>
-      el.addEventListener("click",()=>openModal(el.dataset.id))));
+    root.querySelectorAll("[data-id]").forEach(el=>{
+      el.setAttribute("role","button");
+      el.setAttribute("tabindex","0");
+      el.addEventListener("click",()=>openModal(el.dataset.id));
+      el.addEventListener("keydown",ev=>{
+        if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); openModal(el.dataset.id); }
+      });
+    }));
+  setupReveal();
 }
+
+/* ---- Scroll reveal (basado en posición, robusto en cualquier entorno) ---- */
+function revealVisible(){
+  const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  document.querySelectorAll(".reveal:not(.in)").forEach(el=>{
+    if(el.getBoundingClientRect().top < vh - 40) el.classList.add("in");
+  });
+}
+function setupReveal(){ revealVisible(); requestAnimationFrame(revealVisible); }
 
 function renderTable(items){
   return `
@@ -398,5 +416,42 @@ document.getElementById("viewToggle").addEventListener("click", e=>{
 document.getElementById("search").addEventListener("input", e=>{
   query = e.target.value; render();
 });
+
+/* ---- Tema claro/oscuro ---- */
+const THEME_KEY = "intellfoo-theme";
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem(THEME_KEY, t); } catch(_){}
+}
+(function initTheme(){
+  let t;
+  try { t = localStorage.getItem(THEME_KEY); } catch(_){}
+  if(!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  applyTheme(t);
+})();
+document.getElementById("themeToggle").addEventListener("click", ()=>{
+  const cur = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  applyTheme(cur);
+});
+
+/* ---- Navbar reactiva al scroll + botón volver arriba ---- */
+const navEl = document.querySelector(".nav");
+const totopBtn = document.getElementById("totop");
+function onScroll(){
+  const y = window.scrollY || document.documentElement.scrollTop;
+  navEl.classList.toggle("scrolled", y > 8);
+  totopBtn.classList.toggle("show", y > 680);
+  revealVisible();
+}
+window.addEventListener("scroll", onScroll, { passive:true });
+window.addEventListener("resize", revealVisible, { passive:true });
+totopBtn.addEventListener("click", ()=> window.scrollTo({ top:0, behavior:"smooth" }));
+/* Activa las animaciones de aparición solo si hay JS y no se pide menos movimiento */
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  document.documentElement.classList.add("has-reveal");
+}
+onScroll();
+/* Failsafe: nada puede quedar invisible — revela todo pasados 2,5 s */
+setTimeout(()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>el.classList.add("in")), 2500);
 
 render();
