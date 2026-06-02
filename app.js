@@ -223,32 +223,24 @@ function tile(e){
     </div>`;
 }
 
-/* Imagen del hero (foto grande o ilustración) */
-function heroImage(e){
-  if(e.img){
-    return `<img class="hero-img" src="${e.img}" alt="${e.name}"
-        onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">` +
-      `<span class="hero-svg hidden">${illustration(e.art)}</span>`;
-  }
-  return `<span class="hero-svg">${illustration(e.art)}</span>`;
-}
-
-/* Hero destacado a pantalla completa */
-function heroFeature(e){
+/* Portada / header con título de equipamiento (foto del campus UJA, sin producto) */
+function heroTitle(){
   return `
-    <div class="hero-feature" data-id="${e.id}">
+    <header class="hero-feature hero-title">
       <div class="hero-photo" style="background-image:url('assets/img/band-campus.jpg')"></div>
-      <div class="eyebrow">Equipo destacado · ${e.brand}</div>
-      <h1 class="hero-name">${e.name}</h1>
-      <p class="hero-tag">${e.tagline}</p>
-      <span class="hero-cta">Ver ficha técnica ${ARROW}</span>
-      <div class="hero-img-wrap">${heroImage(e)}</div>
-    </div>`;
+      <div class="hero-inner">
+        <div class="eyebrow">IntellFoo · Universidad de Jaén</div>
+        <h1 class="hero-name">Equipamiento de Drones y Sensores</h1>
+        <p class="hero-tag">Inventario técnico del grupo de teledetección: aeronaves no tripuladas
+        y sensores de precisión para cartografía, agricultura de precisión y medio ambiente.</p>
+        <a class="hero-cta" href="#catalogo">Ver el catálogo ${ARROW}</a>
+      </div>
+    </header>`;
 }
 
 /* Sección de una categoría con sus subgrupos */
-function catSection(type, items, featured){
-  const ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
+function catSection(type, items){
+  const ofType = items.filter(e=>e.type===type);
   if(!ofType.length) return "";
   let html = `<section class="cat">
     <div class="reveal">
@@ -286,8 +278,7 @@ function band(o){
 }
 
 /* Vista showcase con texto editorial y bandas de imagen intercaladas */
-function renderGrid(items, featured){
-  const isDefault = !!featured;   // vista catálogo, sin filtro ni búsqueda
+function renderGrid(items, isDefault){
   let html = "";
   if(isDefault){
     html += `<div class="intro reveal">
@@ -305,7 +296,7 @@ function renderGrid(items, featured){
       src:"Masa forestal · vuelo propio"
     });
   }
-  html += catSection("drone", items, featured);
+  html += catSection("drone", items);
   if(isDefault){
     html += band({
       img:"assets/img/band-field.jpg",
@@ -315,7 +306,7 @@ function renderGrid(items, featured){
       src:"Viñedo · ortomosaico aéreo"
     });
   }
-  html += catSection("sensor", items, featured);
+  html += catSection("sensor", items);
   return html;
 }
 
@@ -350,11 +341,10 @@ function render(){
     return matches(e,q);
   });
 
-  /* Hero destacado (solo en vista catálogo, sin filtro ni búsqueda) */
+  /* Portada (solo en vista catálogo, sin búsqueda) */
   const heroMount = document.getElementById("hero-mount");
-  const showHero = (activeFilter==="all" && !query.trim() && view==="grid");
-  const featured = showHero ? EQUIPAMIENTO.find(e=>e.id==="matrice400") : null;
-  heroMount.innerHTML = featured ? heroFeature(featured) : "";
+  const showHero = (!query.trim() && view==="grid");
+  heroMount.innerHTML = showHero ? heroTitle() : "";
 
   let html = "";
   if(activeFilter!=="software"){
@@ -363,7 +353,7 @@ function render(){
     } else if(view==="table"){
       html += renderTable(items);
     } else {
-      html += renderGrid(items, featured);
+      html += renderGrid(items, showHero);
     }
   }
   catalogEl.innerHTML = html;
