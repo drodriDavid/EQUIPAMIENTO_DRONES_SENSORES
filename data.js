@@ -1,7 +1,7 @@
 /* =====================================================================
    INVENTARIO DE EQUIPAMIENTO — Drones y Sensores
-   Grupo de Investigación IntellFoo / GGGJ — Universidad de Jaén
-   Fuentes: web IntellFoo (intellfoo.ujaen.es/?page_id=402),
+   AeroSense — Grupo GGGJ, Universidad de Jaén
+   Fuentes: web del grupo (gggj.ujaen.es),
             inventario interno y tabla de pólizas (LivingSoiLL / CEATIC).
    ===================================================================== */
 
@@ -397,11 +397,11 @@ const EQUIPAMIENTO = [
 
 /* Software / herramientas de procesado asociadas al equipamiento */
 const SOFTWARE = [
-  ["Pix4D", "Fotogrametría y generación de ortomosaicos / modelos 3D"],
-  ["Agisoft MetaShape", "Procesado fotogramétrico y nubes de puntos"],
-  ["UgCS", "Planificación de planes de vuelo"],
-  ["ArcGIS 10.8.2", "Sistema de información geográfica (GIS)"],
-  ["NVI", "Cálculo de índices de vegetación"],
-  ["SpatialExplorer", "Procesado de datos LiDAR e hiperespectral (Phoenix)"],
-  ["HyperSpec III", "Procesado de imagen hiperespectral (Headwall)"],
+  { name:"Pix4D",             cat:"Fotogrametría",   desc:"Ortomosaicos y modelos 3D a partir de imágenes.",        color:"#0a84ff", url:"https://www.pix4d.com" },
+  { name:"Agisoft Metashape", cat:"Fotogrametría",   desc:"Procesado fotogramétrico y nubes de puntos densas.",     color:"#e0532e", url:"https://www.agisoft.com" },
+  { name:"UgCS",              cat:"Planificación",   desc:"Diseño y ejecución de planes de vuelo automatizados.",   color:"#16a36a", url:"https://www.sphengineering.com/flight-planning/ugcs" },
+  { name:"ArcGIS",            cat:"SIG",             desc:"Sistema de información geográfica y análisis espacial.", color:"#2f7d3b", url:"https://www.arcgis.com" },
+  { name:"NVI",               cat:"Análisis",        desc:"Cálculo de índices de vegetación (NDVI, NDRE…).",        color:"#7a57d1", url:"" },
+  { name:"SpatialExplorer",   cat:"LiDAR",           desc:"Procesado de datos LiDAR e hiperespectral (Phoenix).",   color:"#0e8f8f", url:"https://www.phoenixlidar.com" },
+  { name:"HyperSpec III",     cat:"Hiperespectral",  desc:"Procesado de imagen hiperespectral (Headwall).",         color:"#c2511f", url:"https://headwallphotonics.com" },
 ];

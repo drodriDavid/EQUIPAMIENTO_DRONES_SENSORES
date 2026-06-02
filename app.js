@@ -39,7 +39,7 @@ const STATUS_OPTS = [
   { label:"En revisión",  level:"warn" },
   { label:"No operativo", level:"bad"  },
 ];
-const STATUS_KEY = "intellfoo-status";
+const STATUS_KEY = "aerosense-status";
 function loadStatusOverrides(){ try{ return JSON.parse(localStorage.getItem(STATUS_KEY)) || {}; }catch(_){ return {}; } }
 function applyStatusOverrides(){
   const ov = loadStatusOverrides();
@@ -255,7 +255,7 @@ function heroTitle(){
     <header class="hero-feature hero-title">
       <div class="hero-photo" style="background-image:url('assets/img/band-campus.jpg')"></div>
       <div class="hero-inner">
-        <div class="eyebrow">IntellFoo · Universidad de Jaén</div>
+        <div class="eyebrow">AeroSense · Universidad de Jaén</div>
         <h1 class="hero-name">Equipamiento de Drones y Sensores</h1>
         <p class="hero-tag">Una flota que abarca desde multirrotores ultraligeros a plataformas
         industriales de carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR
@@ -349,6 +349,24 @@ function row(e){
     </tr>`;
 }
 
+/* Tarjeta de software (icono monograma + categoría + enlace) */
+function softCard(s){
+  const mono = (s.name.replace(/[^A-Za-z0-9]/g,"").slice(0,2) || "··").toUpperCase();
+  const link = s.url
+    ? `<span class="soft-link">Visitar sitio ${ARROW}</span>`
+    : `<span class="soft-link soft-link--muted">Herramienta interna</span>`;
+  const inner =
+    `<div class="soft-ico" style="--c:${s.color}">${mono}</div>
+     <div class="soft-body">
+       <div class="soft-top"><b>${s.name}</b><span class="soft-cat">${s.cat}</span></div>
+       <span class="soft-desc">${s.desc}</span>
+       ${link}
+     </div>`;
+  return s.url
+    ? `<a class="soft reveal" href="${s.url}" target="_blank" rel="noopener">${inner}</a>`
+    : `<div class="soft reveal">${inner}</div>`;
+}
+
 /* ---- Render principal ---- */
 function render(){
   const q = query.trim().toLowerCase();
@@ -379,11 +397,10 @@ function render(){
   catalogEl.innerHTML = html;
 
   /* Software */
-  const softMatch = SOFTWARE.filter(([n,d])=> !q || (n+" "+d).toLowerCase().includes(q));
+  const softMatch = SOFTWARE.filter(s=> !q || (s.name+" "+s.desc+" "+s.cat).toLowerCase().includes(q));
   if(showSoftware && softMatch.length){
     softSection.style.display = "block";
-    document.getElementById("soft-grid").innerHTML = softMatch.map(([n,d])=>
-      `<div class="soft reveal"><b>${n}</b><span>${d}</span></div>`).join("");
+    document.getElementById("soft-grid").innerHTML = softMatch.map(softCard).join("");
   } else {
     softSection.style.display = "none";
   }
@@ -493,7 +510,7 @@ document.getElementById("search").addEventListener("input", e=>{
 });
 
 /* ---- Tema claro/oscuro ---- */
-const THEME_KEY = "intellfoo-theme";
+const THEME_KEY = "aerosense-theme";
 function applyTheme(t){
   document.documentElement.setAttribute("data-theme", t);
   try { localStorage.setItem(THEME_KEY, t); } catch(_){}
