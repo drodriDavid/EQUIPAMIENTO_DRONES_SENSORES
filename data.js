@@ -211,24 +211,30 @@ const EQUIPAMIENTO = [
     type: "drone",
     art: "industrial",
     img: "assets/img/lidardrone.jpg",
-    name: "Dron LiDAR FX II (Aeromedia)",
+    name: "LiDARdrone XL (Aeromedia)",
     brand: "Aeromedia / Phoenix",
-    tagline: "Plataforma aerotransportada para LiDAR Phoenix",
+    tagline: "Hexacóptero de carga pesada para LiDAR aerotransportado",
     status: { label: "Revisión de póliza", level: "warn" },
     serial: "UDATR 0014",
     poliza: "CASER 96028197 · gestionado con LivingSoiLL",
     description:
-      "Plataforma de ala rotatoria de gran capacidad de carga diseñada por Aeromedia para " +
-      "transportar el sistema LiDAR Phoenix Scout-Ultra y sensores asociados (hiperespectral, " +
-      "térmico). Es el vector aéreo del escaneado láser de alta densidad del grupo.",
+      "Multicóptero de carga pesada (configuración X6 plegable, fibra de carbono y aluminio " +
+      "6061) diseñado por Aeromedia para transportar el sistema LiDAR Phoenix Scout-Ultra y " +
+      "sensores asociados (hiperespectral, térmico). Es el vector aéreo del escaneado láser de " +
+      "alta densidad del grupo: cubre hasta 130 ha por vuelo con densidades de 200–300 pts/m².",
     specs: [
-      ["Autonomía de vuelo", "25 min"],
-      ["Capacidad de carga", "10 kg"],
+      ["Autonomía de vuelo", "hasta 45 min"],
+      ["Capacidad de carga útil", "13 kg"],
+      ["Peso máx. al despegue (MTOW)", "25 kg"],
+      ["Configuración", "Hexacóptero X6 plegable (fibra de carbono + Al 6061)"],
+      ["Motores", "T-Motor de grado industrial, resistentes al agua"],
       ["Carga útil principal", "LiDAR Phoenix Scout-Ultra"],
+      ["Cobertura", "130 ha/vuelo · 200 m de ancho de pasada · 100 m AGL · 10 m/s"],
+      ["Densidad de puntos", "200–300 puntos/m²"],
       ["Software de vuelo/proceso", "SpatialExplorer"],
     ],
-    features: ["LiDAR", "Carga 10 kg", "Aeromedia"],
-    doc: "https://www.phoenixlidar.com",
+    features: ["LiDAR", "Carga 13 kg", "45 min", "Aeromedia"],
+    doc: "https://aeromedia.es/lidardrone-xl/",
   },
 
   /* ------------------------------------------------------------------ */

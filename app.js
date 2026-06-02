@@ -159,12 +159,55 @@ function card(e){
     </div>`;
 }
 
-/* Vista en rejilla con secciones y subcategorías */
+/* Imagen del producto para el tile (foto grande o ilustración) */
+function tileImage(e){
+  if(e.img){
+    return `<img class="tile-img" src="${e.img}" alt="${e.name}" loading="lazy"
+        onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">` +
+      `<span class="tile-svg hidden">${illustration(e.art)}</span>`;
+  }
+  return `<span class="tile-svg">${illustration(e.art)}</span>`;
+}
+
+const ARROW = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+  stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+
+/* Tile grande estilo tienda */
+function tile(e){
+  return `
+    <div class="tile" data-id="${e.id}">
+      <span class="tile-status ${e.status.level}"><span class="dot"></span>${e.status.label}</span>
+      <span class="tile-label">${e.brand} · ${TYPE_META[e.type].label}</span>
+      <h3 class="tile-name">${e.name}</h3>
+      <p class="tile-tag">${e.tagline}</p>
+      <span class="tile-cta">Ver ficha técnica ${ARROW}</span>
+      <div class="tile-img-wrap">${tileImage(e)}</div>
+    </div>`;
+}
+
+/* Hero destacado a pantalla completa */
+function heroFeature(e){
+  return `
+    <div class="hero-feature" data-id="${e.id}">
+      <span class="tile-label">Equipo destacado · ${e.brand}</span>
+      <h2 class="tile-name">${e.name}</h2>
+      <p class="tile-tag">${e.tagline}</p>
+      <span class="tile-cta">Ver ficha técnica ${ARROW}</span>
+      <div class="tile-img-wrap">${tileImage(e)}</div>
+    </div>`;
+}
+
+/* Vista showcase con hero, secciones y subcategorías */
 function renderGrid(items){
   let html = "";
+  const featuredId = "matrice400";
+  const showHero = (activeFilter==="all" && !query.trim());
+  const featured = showHero ? items.find(e=>e.id===featuredId) : null;
+  if(featured) html += heroFeature(featured);
+
   let firstCat = true;
   for(const type of ["drone","sensor"]){
-    const ofType = items.filter(e=>e.type===type);
+    let ofType = items.filter(e=>e.type===type && (!featured || e.id!==featured.id));
     if(!ofType.length) continue;
     html += `<h2 class="cat-head ${firstCat?"first":""}">${CAT_META[type].title}</h2>`;
     html += `<p class="cat-sub">${CAT_META[type].sub}</p>`;
@@ -175,12 +218,12 @@ function renderGrid(items){
       group.forEach(e=>grouped.add(e.id));
       if(!group.length) continue;
       html += `<div class="sub-head">${sg.key} <span class="pill">${group.length}</span></div>`;
-      html += `<div class="grid">${group.map(card).join("")}</div>`;
+      html += `<div class="showcase">${group.map(tile).join("")}</div>`;
     }
     const rest = ofType.filter(e=>!grouped.has(e.id));
     if(rest.length){
       html += `<div class="sub-head">Otros <span class="pill">${rest.length}</span></div>`;
-      html += `<div class="grid">${rest.map(card).join("")}</div>`;
+      html += `<div class="showcase">${rest.map(tile).join("")}</div>`;
     }
   }
   return html;
@@ -240,8 +283,8 @@ function render(){
     softSection.style.display = "none";
   }
 
-  document.querySelectorAll(".card").forEach(c=>c.addEventListener("click",()=>openModal(c.dataset.id)));
-  document.querySelectorAll("tr[data-id]").forEach(r=>r.addEventListener("click",()=>openModal(r.dataset.id)));
+  catalogEl.querySelectorAll("[data-id]").forEach(el=>
+    el.addEventListener("click",()=>openModal(el.dataset.id)));
 }
 
 function renderTable(items){
