@@ -233,7 +233,20 @@ function catSection(type, items, featured){
   return html + `</section>`;
 }
 
-/* Vista showcase con texto editorial intercalado (el hero va aparte) */
+/* Banda divisoria a sangre completa con imagen de fondo */
+function band(o){
+  return `<section class="band reveal">
+    <div class="band-bg" style="background-image:url('${o.img}')"></div>
+    <div class="band-inner">
+      <div class="eyebrow">${o.eyebrow}</div>
+      <h2>${o.title}</h2>
+      ${o.text ? `<p>${o.text}</p>` : ""}
+    </div>
+    ${o.src ? `<span class="src">${o.src}</span>` : ""}
+  </section>`;
+}
+
+/* Vista showcase con texto editorial y bandas de imagen intercaladas */
 function renderGrid(items, featured){
   const isDefault = !!featured;   // vista catálogo, sin filtro ni búsqueda
   let html = "";
@@ -245,12 +258,23 @@ function renderGrid(items, featured){
       carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR e
       hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
     </div>`;
+    html += band({
+      img:"assets/img/band-campus.jpg",
+      eyebrow:"Captura aérea",
+      title:"Cartografiamos el territorio desde el aire",
+      text:"Vuelos propios de fotogrametría, térmica y LiDAR sobre cultivos, masas forestales e infraestructuras.",
+      src:"Campus Las Lagunillas, Universidad de Jaén · vuelo propio"
+    });
   }
   html += catSection("drone", items, featured);
   if(isDefault){
-    html += `<p class="statement reveal">Cada sensor añade una capa de información:
-      <span>RGB</span>, <span>multiespectral</span>, <span>térmico</span>,
-      <span>LiDAR</span> e <span>hiperespectral</span>.</p>`;
+    html += band({
+      img:"assets/img/band-field.jpg",
+      eyebrow:"Teledetección",
+      title:"Cada sensor, una capa de información",
+      text:"<span>RGB</span> · <span>multiespectral</span> · <span>térmico</span> · <span>LiDAR</span> · <span>hiperespectral</span>",
+      src:"Viñedo · ortomosaico aéreo"
+    });
   }
   html += catSection("sensor", items, featured);
   return html;
