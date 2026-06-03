@@ -1,6 +1,6 @@
 /* =====================================================================
    INVENTARIO DE EQUIPAMIENTO — Drones y Sensores
-   AeroSense — Grupo GGGJ, Universidad de Jaén
+   AEROLAB — Grupo GGGJ, Universidad de Jaén
    Fuentes: web del grupo (gggj.ujaen.es),
             inventario interno y tabla de pólizas (LivingSoiLL / CEATIC).
    ===================================================================== */

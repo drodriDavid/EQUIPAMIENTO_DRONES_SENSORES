@@ -255,7 +255,7 @@ function heroTitle(){
     <header class="hero-feature hero-title">
       <div class="hero-photo" style="background-image:url('assets/img/band-campus.jpg')"></div>
       <div class="hero-inner">
-        <div class="eyebrow">AeroSense · Universidad de Jaén</div>
+        <div class="eyebrow">AEROLAB · Universidad de Jaén</div>
         <h1 class="hero-name">Equipamiento de Drones y Sensores</h1>
         <p class="hero-tag">Una flota que abarca desde multirrotores ultraligeros a plataformas
         industriales de carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR
