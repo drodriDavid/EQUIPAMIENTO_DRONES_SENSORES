@@ -260,6 +260,7 @@ function heroTitle(){
         <h1 class="sr-only">AEROLAB — Inventario de Drones y Sensores · Universidad de Jaén</h1>
         <img class="hero-logo" src="assets/img/aerolab-white.svg"
              alt="AEROLAB · Spatial Intelligence and Computer Graphics" />
+        <span class="hero-project">DIGIAGRO</span>
         <p class="hero-tag">Inventario de drones y sensores de teledetección de la Universidad de Jaén:
         una flota que abarca desde multirrotores ultraligeros a plataformas industriales de carga
         pesada, con sensores RGB, multiespectrales, térmicos, LiDAR e hiperespectrales.</p>
