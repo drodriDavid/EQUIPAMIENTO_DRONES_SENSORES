@@ -529,14 +529,20 @@ setTimeout(()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>el.clas
 function renderPromo(){
   const grid = document.getElementById("promo-grid");
   if(!grid || typeof PROMO === "undefined") return;
-  grid.innerHTML = PROMO.map((b,i)=>{
-    const base = "assets/video/promo/" + b;
-    return `<button class="promo-card reveal" data-vid="${base}.mp4" aria-label="Reproducir vídeo de vuelo ${i+1}">
-      <img class="promo-thumb" src="${base}.jpg" alt="Vuelo de dron AEROLAB" loading="lazy">
-      <span class="promo-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-    </button>`;
+  grid.innerHTML = PROMO.map(p=>{
+    const base = "assets/video/promo/" + p.file;
+    return `<div class="promo-card reveal">
+      <button class="promo-media" data-vid="${base}.mp4" aria-label="Reproducir: ${p.title}">
+        <img class="promo-thumb" src="${base}.jpg" alt="${p.title}" loading="lazy">
+        <span class="promo-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+      </button>
+      <div class="promo-cap">
+        <span class="promo-title">${p.title}</span>
+        <span class="promo-util">${p.util}</span>
+      </div>
+    </div>`;
   }).join("");
-  grid.querySelectorAll(".promo-card").forEach(c=>
+  grid.querySelectorAll(".promo-media").forEach(c=>
     c.addEventListener("click", ()=>openLightbox(c.dataset.vid)));
   setupReveal();
 }
