@@ -113,7 +113,7 @@
   /* ============ STATS STRIP ============ */
   .stats-wrap{border-bottom:1px solid var(--line);background:var(--bg)}
   .stats{display:flex;flex-wrap:wrap;gap:0}
-  .stat{flex:1 1 0;min-width:120px;padding:22px 8px;text-align:center;position:relative}
+  .stat{flex:1 1 0;min-width:120px;padding:15px 8px;text-align:center;position:relative}
   .stat + .stat::before{content:"";position:absolute;left:0;top:26%;height:48%;width:1px;background:var(--line)}
   .stat .n{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;line-height:1}
   .stat .l{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:6px}
@@ -378,7 +378,7 @@
   /* ============ FOOTER ============ */
   /* ============ ENTIDADES / LOGOS ============ */
   .partners{padding:clamp(44px,6vw,76px) 0 8px;text-align:center;border-top:1px solid var(--line)}
-  .partners-label{display:block;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
+  .partners-label{display:block;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
   .partners-logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(28px,6vw,62px)}
   .partners-logos a{display:block;opacity:.9;transition:opacity .2s, transform .2s var(--ease)}
   .partners-logos a:hover{opacity:1;transform:translateY(-2px)}
@@ -387,7 +387,7 @@
   .partners-logos img.logo-inuo{height:68px}
   @media(max-width:560px){.partners-logos img{height:58px}.partners-logos img.logo-uja{height:46px}.partners-logos img.logo-inuo{height:48px}}
   /* Franja superior de entidades */
-  .partners-top{padding:clamp(34px,4.5vw,52px) 0 clamp(34px,4.5vw,52px);border-top:0;border-bottom:1px solid var(--line)}
+  .partners-top{padding:clamp(18px,2.6vw,28px) 0;border-top:0;border-bottom:1px solid var(--line)}
 
   footer{border-top:1px solid var(--line);background:var(--bg-soft);margin-top:30px}
   .foot{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;padding:34px 0;color:var(--muted);font-size:.84rem;line-height:1.65}
