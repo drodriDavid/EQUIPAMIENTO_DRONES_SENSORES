@@ -255,11 +255,12 @@ function heroTitle(){
     <header class="hero-feature hero-title">
       <div class="hero-photo" style="background-image:url('assets/img/band-campus.jpg')"></div>
       <div class="hero-inner">
-        <div class="eyebrow">AEROLAB · Universidad de Jaén</div>
-        <h1 class="hero-name">Equipamiento de Drones y Sensores</h1>
-        <p class="hero-tag">Una flota que abarca desde multirrotores ultraligeros a plataformas
-        industriales de carga pesada, combinada con sensores RGB, multiespectrales, térmicos, LiDAR
-        e hiperespectrales para cartografiar el territorio con precisión centimétrica.</p>
+        <h1 class="sr-only">AEROLAB — Inventario de Drones y Sensores · Universidad de Jaén</h1>
+        <img class="hero-logo" src="assets/img/aerolab-white.svg"
+             alt="AEROLAB · Spatial Intelligence and Computer Graphics" />
+        <p class="hero-tag">Inventario de drones y sensores de teledetección de la Universidad de Jaén:
+        una flota que abarca desde multirrotores ultraligeros a plataformas industriales de carga
+        pesada, con sensores RGB, multiespectrales, térmicos, LiDAR e hiperespectrales.</p>
         <a class="hero-cta" href="#catalogo">Ver el catálogo ${ARROW}</a>
       </div>
     </header>`;
