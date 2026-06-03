@@ -311,11 +311,11 @@ function renderGrid(items, isDefault){
   let html = "";
   if(isDefault){
     html += band({
-      img:"assets/img/band-forest.jpg",
+      img:"assets/img/band-aerea.jpg?v=30",
       eyebrow:"Captura aérea",
       title:"Cartografiamos el territorio desde el aire",
       text:"Vuelos propios de fotogrametría, térmica y LiDAR sobre cultivos, masas forestales e infraestructuras.",
-      src:"Masa forestal · vuelo propio"
+      src:"Vuelo de dron · AEROLAB"
     });
   }
   html += catSection("drone", items);
