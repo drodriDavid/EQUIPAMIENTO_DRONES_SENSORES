@@ -148,8 +148,7 @@ applyStatusOverrides();
   const sensores = EQUIPAMIENTO.filter(e=>e.type==="sensor").length;
   const ops = EQUIPAMIENTO.filter(e=>e.status.level==="ok").length;
   const data = [
-    [EQUIPAMIENTO.length,"Equipos"], [drones,"Drones"], [sensores,"Sensores"],
-    [SOFTWARE.length,"Software"], [ops,"Operativos"],
+    [EQUIPAMIENTO.length,"Equipos"], [drones,"Drones"], [sensores,"Sensores"], [ops,"Operativos"],
   ];
   document.getElementById("stats").innerHTML = data.map(([n,l])=>
     `<div class="stat"><div class="n grad-text" data-target="${n}">0</div><div class="l">${l}</div></div>`).join("");
@@ -259,7 +258,7 @@ function heroTitle(){
       </video>
       <div class="hero-inner">
         <h1 class="sr-only">AEROLAB — Inventario de Drones y Sensores · Universidad de Jaén</h1>
-        <img class="hero-logo" src="assets/img/aerolab-white.svg"
+        <img class="hero-logo" src="assets/img/aerolab-color.png"
              alt="AEROLAB · Spatial Intelligence and Computer Graphics" />
         <p class="hero-tag">Inventario de drones y sensores de teledetección de la Universidad de Jaén:
         una flota que abarca desde multirrotores ultraligeros a plataformas industriales de carga
@@ -273,26 +272,21 @@ function heroTitle(){
 function catSection(type, items){
   const ofType = items.filter(e=>e.type===type);
   if(!ofType.length) return "";
-  let html = `<section class="cat">
+  /* Orden lógico según SUBGROUPS, pero todo en una sola rejilla (sin subcabeceras) */
+  const ordered = [], seen = new Set();
+  (SUBGROUPS[type] || []).forEach(sg => sg.ids.forEach(id => {
+    const e = ofType.find(x => x.id === id);
+    if(e && !seen.has(id)){ ordered.push(e); seen.add(id); }
+  }));
+  ofType.forEach(e => { if(!seen.has(e.id)){ ordered.push(e); seen.add(e.id); } });
+  return `<section class="cat">
     <div class="reveal">
       <div class="eyebrow">${CAT_META[type].eyebrow}</div>
       <h2 class="cat-head">${CAT_META[type].title}</h2>
       <p class="cat-sub">${CAT_META[type].sub}</p>
-    </div>`;
-  const grouped = new Set();
-  for(const sg of SUBGROUPS[type]){
-    const group = sg.ids.map(id=>ofType.find(e=>e.id===id)).filter(Boolean);
-    group.forEach(e=>grouped.add(e.id));
-    if(!group.length) continue;
-    html += `<div class="sub-head">${sg.key} <span class="pill">${group.length}</span></div>`;
-    html += `<div class="showcase">${group.map(tile).join("")}</div>`;
-  }
-  const rest = ofType.filter(e=>!grouped.has(e.id));
-  if(rest.length){
-    html += `<div class="sub-head">Otros <span class="pill">${rest.length}</span></div>`;
-    html += `<div class="showcase">${rest.map(tile).join("")}</div>`;
-  }
-  return html + `</section>`;
+    </div>
+    <div class="showcase">${ordered.map(tile).join("")}</div>
+  </section>`;
 }
 
 /* Banda divisoria a sangre completa con imagen de fondo */
@@ -515,26 +509,9 @@ document.getElementById("viewToggle").addEventListener("click", e=>{
   view = btn.dataset.v;
   render();
 });
-document.getElementById("search").addEventListener("input", e=>{
-  query = e.target.value; render();
-});
 
-/* ---- Tema claro/oscuro ---- */
-const THEME_KEY = "aerosense-theme";
-function applyTheme(t){
-  document.documentElement.setAttribute("data-theme", t);
-  try { localStorage.setItem(THEME_KEY, t); } catch(_){}
-}
-(function initTheme(){
-  let t;
-  try { t = localStorage.getItem(THEME_KEY); } catch(_){}
-  if(!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  applyTheme(t);
-})();
-document.getElementById("themeToggle").addEventListener("click", ()=>{
-  const cur = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
-  applyTheme(cur);
-});
+/* ---- Tema fijo: siempre claro ---- */
+document.documentElement.setAttribute("data-theme", "light");
 
 /* ---- Navbar reactiva al scroll + botón volver arriba ---- */
 const navEl = document.querySelector(".nav");
