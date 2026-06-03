@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body>
 
@@ -63,6 +63,16 @@
 
 <main>
   <div class="container"><div id="catalog"></div></div>
+
+  <section class="container" id="promo-section">
+    <div class="cat" style="padding-top:clamp(40px,6vw,64px)">
+      <div class="eyebrow">En vuelo</div>
+      <h2 class="cat-head">Galería de vuelos</h2>
+      <p class="cat-sub">Una muestra de nuestras capturas aéreas con dron. Toca cualquier vídeo para verlo a pantalla completa.</p>
+    </div>
+    <div class="promo-grid" id="promo-grid"></div>
+  </section>
+
   <div class="container" id="software-section" style="display:none">
     <div class="cat" style="padding-top:clamp(40px,6vw,64px)">
       <div class="eyebrow">Procesado &amp; planificación</div>
@@ -88,11 +98,16 @@
   </div>
 </footer>
 
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar vídeo">×</button>
+  <video class="lightbox-vid" id="lightboxVid" controls playsinline preload="auto"></video>
+</div>
+
 <button class="totop" id="totop" aria-label="Volver arriba" title="Volver arriba">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
 
-<script src="data.js?v=16"></script>
-<script src="app.js?v=17"></script>
+<script src="data.js?v=18"></script>
+<script src="app.js?v=18"></script>
 </body>
 </html>

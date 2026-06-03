@@ -567,4 +567,40 @@ onScroll();
 /* Failsafe: nada puede quedar invisible — revela todo pasados 2,5 s */
 setTimeout(()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>el.classList.add("in")), 2500);
 
+/* ---- Galería promocional de vídeos + lightbox ---- */
+function renderPromo(){
+  const grid = document.getElementById("promo-grid");
+  if(!grid || typeof PROMO === "undefined") return;
+  grid.innerHTML = PROMO.map((b,i)=>{
+    const base = "assets/video/promo/" + b;
+    return `<button class="promo-card reveal" data-vid="${base}.mp4" aria-label="Reproducir vídeo de vuelo ${i+1}">
+      <img class="promo-thumb" src="${base}.jpg" alt="Vuelo de dron AEROLAB" loading="lazy">
+      <span class="promo-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+    </button>`;
+  }).join("");
+  grid.querySelectorAll(".promo-card").forEach(c=>
+    c.addEventListener("click", ()=>openLightbox(c.dataset.vid)));
+  setupReveal();
+}
+const lightbox = document.getElementById("lightbox");
+const lightboxVid = document.getElementById("lightboxVid");
+function openLightbox(src){
+  lightboxVid.src = src;
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  lightboxVid.play().catch(()=>{});
+}
+function closeLightbox(){
+  lightboxVid.pause();
+  lightboxVid.removeAttribute("src"); lightboxVid.load();
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+lightbox.addEventListener("click", e=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener("keydown", e=>{ if(e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox(); });
+
 render();
+renderPromo();

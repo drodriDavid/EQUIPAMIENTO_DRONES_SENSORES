@@ -405,3 +405,9 @@ const SOFTWARE = [
   { name:"SpatialExplorer",   cat:"LiDAR",           desc:"Procesado de datos LiDAR e hiperespectral (Phoenix).",   color:"#0e8f8f", url:"https://www.phoenixlidar.com" },
   { name:"HyperSpec III",     cat:"Hiperespectral",  desc:"Procesado de imagen hiperespectral (Headwall).",         color:"#c2511f", url:"https://headwallphotonics.com" },
 ];
+
+/* Galería promocional — vídeos de vuelos (en assets/video/promo/) */
+const PROMO = [
+  "DJI_0028", "DJI_0251", "DJI_0166", "DJI_0024", "DJI_0130",
+  "DJI_0342", "DJI_0107", "DJI_0126", "DJI_0346",
+];
