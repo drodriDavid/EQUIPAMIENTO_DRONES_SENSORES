@@ -421,10 +421,10 @@ const PROMO = [
 
 /* Resultados de vuelos — productos generados a partir de los datos capturados */
 const RESULTS = [
-  { img:"assets/img/results/art_ndvi.jpg",      cat:"Multiespectral · NDVI", title:"Mapa NDVI sobre nube de puntos 3D" },
-  { img:"assets/img/results/art_grove3d.jpg",   cat:"Fotogrametría · 3D",    title:"Modelo 3D fotogramétrico del olivar" },
-  { img:"assets/img/results/art_seg3d.jpg",     cat:"Segmentación · IA",     title:"Segmentación individual de olivos en 3D" },
-  { img:"assets/img/results/seg_instance.jpg",  cat:"Visión por computador", title:"Segmentación semántica de cubiertas vegetales" },
-  { img:"assets/img/results/art_ndre.jpg",      cat:"Índices de vegetación", title:"Nube de puntos 3D coloreada por NDRE" },
-  { img:"assets/img/results/orto_campus.jpg",   cat:"Cartografía",           title:"Ortomosaico georreferenciado de alta resolución" },
+  { img:"assets/img/results/sa_datafusion.jpg",        cat:"Fusión de datos",       title:"Fusión RGB + Multiespectral en nube 3D" },
+  { img:"assets/img/results/sa_pipeline.jpg",          cat:"Inventario · IA",       title:"Del vuelo al inventario árbol a árbol" },
+  { img:"assets/img/results/sa_seg_color.jpg",         cat:"Segmentación · IA",     title:"Detección individual de copas de olivar" },
+  { img:"assets/img/results/sa_sustainability_crop.jpg",cat:"Sostenibilidad",        title:"Índice de sostenibilidad por árbol" },
+  { img:"assets/img/results/sa_results_map.jpg",       cat:"Cartografía",           title:"Mapa de sostenibilidad del olivar" },
+  { img:"assets/img/results/sa_graphabs.jpg",          cat:"Teledetección",         title:"Inventario multisensorial de precisión" },
 ];
