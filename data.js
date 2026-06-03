@@ -372,6 +372,33 @@ const EQUIPAMIENTO = [
     doc: "https://headwallphotonics.com/products/hyperspectral-imaging/",
   },
   {
+    id: "fx10e",
+    type: "sensor",
+    art: "hyperspectral",
+    img: "assets/img/fx10e.png",
+    name: "Specim FX10e",
+    brand: "Specim",
+    tagline: "Cámara hiperespectral VNIR de laboratorio (400–1000 nm)",
+    status: { label: "Operativo", level: "ok" },
+    serial: "",
+    poliza: "",
+    description:
+      "Cámara hiperespectral de laboratorio en el rango VNIR (400–1000 nm). Diseñada para " +
+      "análisis en línea y control de calidad, captura 224 bandas espectrales con alta " +
+      "velocidad de adquisición (hasta 330 fps). Interfaz GigE para integración flexible en " +
+      "sistemas de adquisición de datos.",
+    specs: [
+      ["Rango espectral", "400 – 1000 nm (VNIR)"],
+      ["Bandas espectrales", "224 bandas"],
+      ["Píxeles espaciales", "1024 px"],
+      ["Frame rate", "Hasta 330 fps"],
+      ["Interfaz", "GigE Vision"],
+      ["Tipo", "Pushbroom / barrido lineal"],
+    ],
+    features: ["Hiperespectral", "VNIR", "Laboratorio"],
+    doc: "https://www.specim.com/products/specim-fx10/",
+  },
+  {
     id: "afx17",
     type: "sensor",
     art: "hyperspectral",
