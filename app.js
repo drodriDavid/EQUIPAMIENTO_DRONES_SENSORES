@@ -379,7 +379,6 @@ function softCard(s){
 /* ---- Render principal ---- */
 function render(){
   const q = query.trim().toLowerCase();
-  const showSoftware = (activeFilter==="all" || activeFilter==="software");
 
   let items = EQUIPAMIENTO.filter(e=>{
     if(activeFilter==="drone" && e.type!=="drone") return false;
@@ -404,15 +403,6 @@ function render(){
     }
   }
   catalogEl.innerHTML = html;
-
-  /* Software */
-  const softMatch = SOFTWARE.filter(s=> !q || (s.name+" "+s.desc+" "+s.cat).toLowerCase().includes(q));
-  if(showSoftware && softMatch.length){
-    softSection.style.display = "block";
-    document.getElementById("soft-grid").innerHTML = softMatch.map(softCard).join("");
-  } else {
-    softSection.style.display = "none";
-  }
 
   [document.getElementById("hero-mount"), catalogEl].forEach(root=>
     root.querySelectorAll("[data-id]").forEach(el=>{
@@ -602,5 +592,21 @@ document.getElementById("lightboxClose").addEventListener("click", closeLightbox
 lightbox.addEventListener("click", e=>{ if(e.target === lightbox) closeLightbox(); });
 document.addEventListener("keydown", e=>{ if(e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox(); });
 
+/* ---- Galería de resultados de vuelos ---- */
+function renderResults(){
+  const grid = document.getElementById("results-grid");
+  if(!grid || typeof RESULTS === "undefined") return;
+  grid.innerHTML = RESULTS.map(r=>
+    `<figure class="result-card reveal">
+       <img class="result-img" src="${r.img}" alt="${r.title}" loading="lazy">
+       <figcaption class="result-cap">
+         <span class="result-cat">${r.cat}</span>
+         <span class="result-title">${r.title}</span>
+       </figcaption>
+     </figure>`).join("");
+  setupReveal();
+}
+
 render();
 renderPromo();
+renderResults();

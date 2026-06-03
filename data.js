@@ -411,3 +411,13 @@ const PROMO = [
   "DJI_0028", "DJI_0251", "DJI_0166", "DJI_0024", "DJI_0130",
   "DJI_0342", "DJI_0107", "DJI_0126", "DJI_0346",
 ];
+
+/* Resultados de vuelos — productos generados a partir de los datos capturados */
+const RESULTS = [
+  { img:"assets/img/results/ortomosaico.jpg",   cat:"Cartografía",   title:"Ortomosaico georreferenciado" },
+  { img:"assets/img/results/reconstruccion.jpg", cat:"Fotogrametría", title:"Reconstrucción 3D del terreno" },
+  { img:"assets/img/results/nubepuntos.jpg",    cat:"LiDAR · 3D",     title:"Nube de puntos 3D" },
+  { img:"assets/img/results/zonas.jpg",         cat:"Inventario",     title:"Delimitación de zonas de estudio" },
+  { img:"assets/img/band-field.jpg",            cat:"Agricultura",    title:"Cartografía de viñedo" },
+  { img:"assets/img/band-forest.jpg",           cat:"Forestal",       title:"Inventario de masa forestal" },
+];
