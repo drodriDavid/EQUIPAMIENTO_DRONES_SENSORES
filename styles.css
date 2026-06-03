@@ -111,12 +111,22 @@
   .hero-svg svg{width:100%;height:auto}
 
   /* ============ STATS STRIP ============ */
-  .stats-wrap{border-bottom:1px solid var(--line);background:var(--bg)}
-  .stats{display:flex;flex-wrap:wrap;gap:0}
-  .stat{flex:1 1 0;min-width:120px;padding:22px 8px;text-align:center;position:relative}
-  .stat + .stat::before{content:"";position:absolute;left:0;top:26%;height:48%;width:1px;background:var(--line)}
-  .stat .n{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;line-height:1}
-  .stat .l{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:6px}
+  /* Capacidades + valor */
+  .capabilities{border-bottom:1px solid var(--line);background:var(--bg);padding:30px 0 38px}
+  .cap-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 12px;margin-bottom:34px}
+  .cap-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;
+    border:1px solid var(--line);background:var(--card);font-size:.82rem;font-weight:600;color:var(--ink-2);
+    box-shadow:var(--sh-1);transition:transform .2s var(--ease), box-shadow .2s var(--ease)}
+  .cap-chip:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+  .cap-chip i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent)}
+  .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,30px)}
+  .value-card{text-align:left}
+  .value-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+    color:#fff;margin-bottom:14px;background:linear-gradient(135deg,var(--accent),#21b3cf);box-shadow:var(--sh-1)}
+  .value-icon svg{width:24px;height:24px}
+  .value-card h3{font-size:1.02rem;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;color:var(--ink)}
+  .value-card p{font-size:.88rem;line-height:1.5;color:var(--muted);margin:0}
+  @media(max-width:720px){.value-grid{grid-template-columns:1fr;gap:22px}.value-card{text-align:center}.value-icon{margin-left:auto;margin-right:auto}}
 
   /* ============ CONTROLS ============ */
   .controls{position:sticky;top:62px;z-index:50;background:rgba(255,255,255,.82);

@@ -144,6 +144,8 @@ applyStatusOverrides();
 
 /* ---- Stats ---- */
 (function renderStats(){
+  const mount = document.getElementById("stats");
+  if(!mount) return;
   const drones = EQUIPAMIENTO.filter(e=>e.type==="drone").length;
   const sensores = EQUIPAMIENTO.filter(e=>e.type==="sensor").length;
   const ops = EQUIPAMIENTO.filter(e=>e.status.level==="ok").length;
