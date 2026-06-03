@@ -421,10 +421,10 @@ const PROMO = [
 
 /* Resultados de vuelos — productos generados a partir de los datos capturados */
 const RESULTS = [
-  { img:"assets/img/results/ortomosaico.jpg",   cat:"Cartografía",   title:"Ortomosaico georreferenciado" },
-  { img:"assets/img/results/reconstruccion.jpg", cat:"Fotogrametría", title:"Reconstrucción 3D del terreno" },
-  { img:"assets/img/results/nubepuntos.jpg",    cat:"LiDAR · 3D",     title:"Nube de puntos 3D" },
-  { img:"assets/img/results/zonas.jpg",         cat:"Inventario",     title:"Delimitación de zonas de estudio" },
-  { img:"assets/img/band-field.jpg",            cat:"Agricultura",    title:"Cartografía de viñedo" },
-  { img:"assets/img/band-forest.jpg",           cat:"Forestal",       title:"Inventario de masa forestal" },
+  { img:"assets/img/results/seg_instance.jpg",  cat:"Segmentación · IA",   title:"Segmentación semántica de cubiertas vegetales" },
+  { img:"assets/img/results/olivar_ms.jpg",     cat:"Multiespectral · 3D", title:"Modelo 3D multiespectral del olivar" },
+  { img:"assets/img/results/orto_campus.jpg",   cat:"Cartografía",         title:"Ortomosaico georreferenciado de alta resolución" },
+  { img:"assets/img/results/inspeccion.jpg",    cat:"Inspección",          title:"Detección de patologías en patrimonio" },
+  { img:"assets/img/results/mds_olivar.jpg",    cat:"Fotogrametría",       title:"Modelo digital de superficie (MDS)" },
+  { img:"assets/img/results/zonas.jpg",         cat:"Planificación",       title:"Delimitación de zonas de estudio" },
 ];
