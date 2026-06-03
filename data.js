@@ -421,10 +421,10 @@ const PROMO = [
 
 /* Resultados de vuelos — productos generados a partir de los datos capturados */
 const RESULTS = [
-  { img:"assets/img/results/seg_instance.jpg",  cat:"Segmentación · IA",   title:"Segmentación semántica de cubiertas vegetales" },
-  { img:"assets/img/results/olivar_ms.jpg",     cat:"Multiespectral · 3D", title:"Modelo 3D multiespectral del olivar" },
-  { img:"assets/img/results/orto_campus.jpg",   cat:"Cartografía",         title:"Ortomosaico georreferenciado de alta resolución" },
-  { img:"assets/img/results/inspeccion.jpg",    cat:"Inspección",          title:"Detección de patologías en patrimonio" },
-  { img:"assets/img/results/mds_olivar.jpg",    cat:"Fotogrametría",       title:"Modelo digital de superficie (MDS)" },
-  { img:"assets/img/results/zonas.jpg",         cat:"Planificación",       title:"Delimitación de zonas de estudio" },
+  { img:"assets/img/results/art_ndvi.jpg",      cat:"Multiespectral · NDVI", title:"Mapa NDVI sobre nube de puntos 3D" },
+  { img:"assets/img/results/art_grove3d.jpg",   cat:"Fotogrametría · 3D",    title:"Modelo 3D fotogramétrico del olivar" },
+  { img:"assets/img/results/art_seg3d.jpg",     cat:"Segmentación · IA",     title:"Segmentación individual de olivos en 3D" },
+  { img:"assets/img/results/seg_instance.jpg",  cat:"Visión por computador", title:"Segmentación semántica de cubiertas vegetales" },
+  { img:"assets/img/results/art_ndre.jpg",      cat:"Índices de vegetación", title:"Nube de puntos 3D coloreada por NDRE" },
+  { img:"assets/img/results/orto_campus.jpg",   cat:"Cartografía",           title:"Ortomosaico georreferenciado de alta resolución" },
 ];

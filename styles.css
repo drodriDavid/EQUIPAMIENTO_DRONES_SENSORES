@@ -306,6 +306,7 @@
   .results-grid{display:grid;gap:14px;grid-template-columns:repeat(3,1fr);margin-top:20px}
   @media(max-width:900px){.results-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.results-grid{grid-template-columns:1fr}}
+  .results-credit{margin-top:18px;text-align:center;font-size:.78rem;color:var(--muted);font-style:italic}
   .result-card{position:relative;margin:0;border-radius:16px;overflow:hidden;aspect-ratio:4/3;
     background:#0a0f1c;box-shadow:var(--sh-1);transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
   .result-card:hover{transform:translateY(-4px);box-shadow:var(--sh-2)}
@@ -381,7 +382,8 @@
   .partners-logos a{display:block;opacity:.9;transition:opacity .2s, transform .2s var(--ease)}
   .partners-logos a:hover{opacity:1;transform:translateY(-2px)}
   .partners-logos img{height:84px;width:auto;object-fit:contain;display:block}
-  @media(max-width:560px){.partners-logos img{height:58px}}
+  .partners-logos img.logo-uja{height:66px}
+  @media(max-width:560px){.partners-logos img{height:58px}.partners-logos img.logo-uja{height:46px}}
   /* Franja superior de entidades */
   .partners-top{padding:clamp(34px,4.5vw,52px) 0 clamp(34px,4.5vw,52px);border-top:0;border-bottom:1px solid var(--line)}
 
