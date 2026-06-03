@@ -111,32 +111,12 @@
   .hero-svg svg{width:100%;height:auto}
 
   /* ============ STATS STRIP ============ */
-  /* Capacidades + valor (banda compacta) */
-  .capabilities{border-bottom:1px solid var(--line);background:var(--bg);padding:16px 0}
-  .cap-inner{display:flex;align-items:center;justify-content:space-between;gap:18px 30px;flex-wrap:wrap}
-  .cap-chips{display:flex;flex-wrap:wrap;gap:7px 8px}
-  .cap-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;
-    border:1px solid var(--line);background:var(--card);font-size:.76rem;font-weight:600;color:var(--ink-2);
-    transition:transform .2s var(--ease), box-shadow .2s var(--ease)}
-  .cap-chip:hover{transform:translateY(-1px);box-shadow:var(--sh-1)}
-  .cap-chip i{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 20%,transparent)}
-  .value-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-  .value-item{display:flex;align-items:center;gap:11px;position:relative}
-  .value-item + .value-item{padding-left:24px}
-  .value-item + .value-item::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:30px;width:1px;background:var(--line)}
-  .value-icon{flex:none;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-    color:#fff;background:linear-gradient(135deg,var(--accent),#21b3cf);box-shadow:var(--sh-1)}
-  .value-icon svg{width:20px;height:20px}
-  .value-text{display:flex;flex-direction:column;line-height:1.25}
-  .value-text b{font-size:.9rem;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
-  .value-text small{font-size:.76rem;color:var(--muted)}
-  @media(max-width:920px){.cap-inner{justify-content:center}.value-row{justify-content:center}}
-  @media(max-width:560px){
-    .value-row{gap:14px}
-    .value-item{flex:1 1 100%;justify-content:flex-start}
-    .value-item + .value-item{padding-left:0}
-    .value-item + .value-item::before{display:none}
-  }
+  .stats-wrap{border-bottom:1px solid var(--line);background:var(--bg)}
+  .stats{display:flex;flex-wrap:wrap;gap:0}
+  .stat{flex:1 1 0;min-width:120px;padding:22px 8px;text-align:center;position:relative}
+  .stat + .stat::before{content:"";position:absolute;left:0;top:26%;height:48%;width:1px;background:var(--line)}
+  .stat .n{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .stat .l{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:6px}
 
   /* ============ CONTROLS ============ */
   .controls{position:sticky;top:62px;z-index:50;background:rgba(255,255,255,.82);
