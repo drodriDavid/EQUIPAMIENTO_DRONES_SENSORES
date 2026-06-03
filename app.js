@@ -258,7 +258,7 @@ function heroTitle(){
       </video>
       <div class="hero-inner">
         <h1 class="sr-only">AEROLAB — Inventario de Drones y Sensores · Universidad de Jaén</h1>
-        <img class="hero-logo" src="assets/img/aerolab-color.png"
+        <img class="hero-logo" src="assets/img/aerolab-white.svg"
              alt="AEROLAB · Spatial Intelligence and Computer Graphics" />
         <p class="hero-tag">Inventario de drones y sensores de teledetección de la Universidad de Jaén:
         una flota que abarca desde multirrotores ultraligeros a plataformas industriales de carga
@@ -295,7 +295,7 @@ function band(o){
     ? `<video class="band-vid" muted loop playsinline preload="none" poster="${o.poster||""}">
          <source src="${o.video}" type="video/mp4"></video>`
     : `<div class="band-bg" style="background-image:url('${o.img}')"></div>`;
-  return `<section class="band reveal">
+  return `<section class="band">
     ${bg}
     <div class="band-inner">
       <div class="eyebrow">${o.eyebrow}</div>
@@ -309,15 +309,6 @@ function band(o){
 /* Vista showcase con texto editorial y bandas de imagen intercaladas */
 function renderGrid(items, isDefault){
   let html = "";
-  if(isDefault){
-    html += band({
-      img:"assets/img/band-forest.jpg",
-      eyebrow:"Captura aérea",
-      title:"Cartografiamos el territorio desde el aire",
-      text:"Vuelos propios de fotogrametría, térmica y LiDAR sobre cultivos, masas forestales e infraestructuras.",
-      src:"Masa forestal · vuelo propio"
-    });
-  }
   html += catSection("drone", items);
   if(isDefault){
     html += band({
