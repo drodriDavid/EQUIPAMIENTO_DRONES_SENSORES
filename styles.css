@@ -90,8 +90,8 @@
   .hero-title .hero-cta{margin-top:28px;cursor:pointer}
   .hero-name{position:relative;z-index:2;font-size:clamp(2.2rem,5.2vw,3.6rem);font-weight:900;
     line-height:1.02;margin:14px 0 0;max-width:16ch}
-  .hero-tag{position:relative;z-index:2;color:#bcc8e0;font-size:clamp(1rem,1.6vw,1.22rem);
-    max-width:62ch;margin:16px 0 0;font-weight:450}
+  .hero-tag{position:relative;z-index:2;color:#ffffff;font-size:clamp(1rem,1.6vw,1.22rem);
+    max-width:62ch;margin:16px 0 0;font-weight:500;text-shadow:0 1px 14px rgba(0,0,0,.45)}
   .hero-cta{position:relative;z-index:2;margin-top:26px;display:inline-flex;align-items:center;gap:9px;
     background:#fff;color:#0a0f1c;font-weight:700;font-size:.95rem;padding:13px 24px;border-radius:999px;
     transition:transform .2s var(--ease), box-shadow .2s}
