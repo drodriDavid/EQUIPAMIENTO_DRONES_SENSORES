@@ -254,6 +254,9 @@ function heroTitle(){
   return `
     <header class="hero-feature hero-title">
       <div class="hero-photo" style="background-image:url('assets/img/band-campus.jpg')"></div>
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+      </video>
       <div class="hero-inner">
         <h1 class="sr-only">AEROLAB — Inventario de Drones y Sensores · Universidad de Jaén</h1>
         <img class="hero-logo" src="assets/img/aerolab-white.svg"
@@ -294,8 +297,12 @@ function catSection(type, items){
 
 /* Banda divisoria a sangre completa con imagen de fondo */
 function band(o){
+  const bg = o.video
+    ? `<video class="band-vid" muted loop playsinline preload="none" poster="${o.poster||""}">
+         <source src="${o.video}" type="video/mp4"></video>`
+    : `<div class="band-bg" style="background-image:url('${o.img}')"></div>`;
   return `<section class="band reveal">
-    <div class="band-bg" style="background-image:url('${o.img}')"></div>
+    ${bg}
     <div class="band-inner">
       <div class="eyebrow">${o.eyebrow}</div>
       <h2>${o.title}</h2>
@@ -320,11 +327,12 @@ function renderGrid(items, isDefault){
   html += catSection("drone", items);
   if(isDefault){
     html += band({
-      img:"assets/img/band-field.jpg",
+      video:"assets/video/band.mp4",
+      poster:"assets/video/band-poster.jpg",
       eyebrow:"Teledetección",
       title:"Cada sensor, una capa de información",
       text:"<span>RGB</span> · <span>multiespectral</span> · <span>térmico</span> · <span>LiDAR</span> · <span>hiperespectral</span>",
-      src:"Viñedo · ortomosaico aéreo"
+      src:"Vuelo de dron · AEROLAB"
     });
   }
   html += catSection("sensor", items);
@@ -426,7 +434,18 @@ function revealVisible(){
     if(el.getBoundingClientRect().top < vh - 40) el.classList.add("in");
   });
 }
-function setupReveal(){ revealVisible(); requestAnimationFrame(revealVisible); }
+function setupReveal(){ revealVisible(); requestAnimationFrame(()=>{ revealVisible(); playVisibleVideos(); }); }
+
+/* Reproduce los vídeos de banda solo cuando están cerca del viewport */
+function playVisibleVideos(){
+  const vh = window.innerHeight || 800;
+  document.querySelectorAll(".band-vid").forEach(v=>{
+    const r = v.getBoundingClientRect();
+    const near = r.top < vh * 1.3 && r.bottom > -vh * 0.3;
+    if(near){ if(v.paused) v.play().catch(()=>{}); }
+    else if(!v.paused){ v.pause(); }
+  });
+}
 
 function renderTable(items){
   return `
@@ -535,6 +554,7 @@ function onScroll(){
   navEl.classList.toggle("scrolled", y > 8);
   totopBtn.classList.toggle("show", y > 680);
   revealVisible();
+  playVisibleVideos();
 }
 window.addEventListener("scroll", onScroll, { passive:true });
 window.addEventListener("resize", revealVisible, { passive:true });
