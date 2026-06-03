@@ -309,6 +309,15 @@ function band(o){
 /* Vista showcase con texto editorial y bandas de imagen intercaladas */
 function renderGrid(items, isDefault){
   let html = "";
+  if(isDefault){
+    html += band({
+      img:"assets/img/band-forest.jpg",
+      eyebrow:"Captura aérea",
+      title:"Cartografiamos el territorio desde el aire",
+      text:"Vuelos propios de fotogrametría, térmica y LiDAR sobre cultivos, masas forestales e infraestructuras.",
+      src:"Masa forestal · vuelo propio"
+    });
+  }
   html += catSection("drone", items);
   if(isDefault){
     html += band({
