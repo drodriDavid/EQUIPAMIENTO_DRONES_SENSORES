@@ -384,7 +384,8 @@
   .partners-logos a:hover{opacity:1;transform:translateY(-2px)}
   .partners-logos img{height:84px;width:auto;object-fit:contain;display:block}
   .partners-logos img.logo-uja{height:66px}
-  @media(max-width:560px){.partners-logos img{height:58px}.partners-logos img.logo-uja{height:46px}}
+  .partners-logos img.logo-inuo{height:68px}
+  @media(max-width:560px){.partners-logos img{height:58px}.partners-logos img.logo-uja{height:46px}.partners-logos img.logo-inuo{height:48px}}
   /* Franja superior de entidades */
   .partners-top{padding:clamp(34px,4.5vw,52px) 0 clamp(34px,4.5vw,52px);border-top:0;border-bottom:1px solid var(--line)}
 
