@@ -408,15 +408,15 @@ const SOFTWARE = [
 
 /* Galería promocional — vídeos de vuelos (en assets/video/promo/) */
 const PROMO = [
-  { file:"DJI_0028", title:"Cartografía de precisión",        util:"Generación de ortomosaicos georreferenciados para inventario y planificación del territorio." },
-  { file:"DJI_0251", title:"Agricultura de precisión",        util:"Seguimiento del estado de los cultivos mediante imagen multiespectral e índices de vegetación." },
-  { file:"DJI_0166", title:"Monitorización forestal",         util:"Evaluación de masas forestales y detección temprana de estrés hídrico y plagas." },
-  { file:"DJI_0024", title:"Modelos 3D del terreno",          util:"Reconstrucción fotogramétrica y modelos digitales de superficie a partir del vuelo." },
-  { file:"DJI_0130", title:"Inspección de infraestructuras",  util:"Revisión de instalaciones y estructuras de difícil acceso con imagen térmica y RGB de alta resolución." },
-  { file:"DJI_0342", title:"Levantamiento topográfico",       util:"Mapeo de alta densidad con precisión centimétrica mediante posicionamiento RTK y LiDAR." },
-  { file:"DJI_0107", title:"Vigilancia ambiental",            util:"Seguimiento de cauces, erosión y cambios del paisaje a lo largo del tiempo." },
-  { file:"DJI_0126", title:"Documentación del patrimonio",    util:"Captura aérea para digitalización y documentación de entornos y elementos singulares." },
-  { file:"DJI_0346", title:"Análisis del territorio",         util:"Vistas aéreas y modelos 3D para el análisis y la gestión de entornos naturales y construidos." },
+  { file:"DJI_0028", title:"Inspección de infraestructuras", util:"Revisión de edificaciones, instalaciones y estructuras de difícil acceso con imagen RGB y térmica de alta resolución." },
+  { file:"DJI_0251", title:"Agricultura de precisión",       util:"Seguimiento del estado de los cultivos mediante imagen multiespectral e índices de vegetación." },
+  { file:"DJI_0166", title:"Conservación del patrimonio",    util:"Documentación y digitalización aérea de entornos y elementos de valor patrimonial." },
+  { file:"DJI_0024", title:"Generación de modelos 3D",       util:"Reconstrucción fotogramétrica y modelos digitales de superficie a partir del vuelo." },
+  { file:"DJI_0130", title:"Levantamiento topográfico",      util:"Mapeo de alta densidad con precisión centimétrica mediante posicionamiento RTK y LiDAR." },
+  { file:"DJI_0342", title:"Gestión medioambiental",         util:"Seguimiento de cauces, vegetación, erosión y cambios del paisaje a lo largo del tiempo." },
+  { file:"DJI_0107", title:"Monitorización ganadera",        util:"Localización y seguimiento de la cabaña ganadera en pastoreo extensivo." },
+  { file:"DJI_0126", title:"Gestión de recursos",            util:"Inventario y planificación de recursos hídricos, agrícolas y energéticos del territorio." },
+  { file:"DJI_0346", title:"Inspección de plantas solares",  util:"Revisión de instalaciones fotovoltaicas y seguimiento de su integración en el territorio." },
 ];
 
 /* Resultados de vuelos — productos generados a partir de los datos capturados */
